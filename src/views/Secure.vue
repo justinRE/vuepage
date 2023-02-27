@@ -1,7 +1,7 @@
 <template>
   <div class="secure">
     <h1>Punch card</h1>
-    <img src="coffeecard.jpeg"></img>
+    <img :src="require('@/assets/coffeecard.jpeg')" />
   </div>
 </template>
 
