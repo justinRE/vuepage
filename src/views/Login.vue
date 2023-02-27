@@ -2,8 +2,8 @@
     <div id="login">
         <h1>Login</h1>
         <div class="form-inputs">
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" v-model="input.username" placeholder="Username" />
+            <label for="username">First/Last Name</label>
+            <input type="text" id="username" name="username" v-model="input.username" placeholder="First/Last Name" />
         </div>
         <div class="form-inputs">
             <label for="password">Password</label>

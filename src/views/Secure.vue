@@ -1,9 +1,9 @@
 <template>
   <div class="secure">
-    <h1>This is an secure page</h1>
+    <h1>Punch card</h1>
+    <img src="coffeecard.jpeg"></img>
   </div>
 </template>
-
 
 <script>
     export default {
@@ -20,3 +20,6 @@
         }
     }
 </script>
+
+<style lang="css">
+</style> 
