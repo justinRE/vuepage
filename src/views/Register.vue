@@ -3,10 +3,15 @@
       <h1>Register</h1>
       <div class="form-container">
         <div class="form-inputs">
-            <label for="username">First/Last Name</label>
-            <input type="text" id="username" name="username" v-model="input.username" placeholder="First/Last Name" />
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" name="firstName" v-model="input.firstName" placeholder="First Name" />
         </div>
         <label>{{error1}}</label>
+        <div class="form-inputs">
+            <label for="lastName">Last Name</label>
+            <input type="text" id="lastName" name="lastName" v-model="input.lastName" placeholder="Last Name" />
+        </div>
+        <label>{{error5}}</label>
         <div class="form-inputs">
             <label for="password">Password</label>
             <input type="password" id="password" name="password" v-model="input.password" placeholder="Password" />
@@ -33,14 +38,21 @@
 
 
 <script>
-export const validateName = username => {
-  if (!username.length) {
+const validateFirstName = firstName => {
+  if (!firstName.length) {
     return { valid: false, error: "This field is required" };
   }
   return { valid: true, error: null };
 };
 
-export const validatePhone = phone => {
+const validateLastName = lastName => {
+  if (!lastName.length) {
+    return { valid: false, error: "This field is required" };
+  }
+  return { valid: true, error: null };
+};
+
+const validatePhone = phone => {
   if (!phone.length) {
     return { valid: false, error: 'This field is required.' };
   }
@@ -52,7 +64,7 @@ export const validatePhone = phone => {
   return { valid: true, error: null };
 }
 
-export const validateEmail = email => {
+const validateEmail = email => {
   if (!email.length) {
     return { valid: false, error: "This field is required" };
   }
@@ -62,7 +74,7 @@ export const validateEmail = email => {
   return { valid: true, error: null };
 };
 
-export const validatePassword = password => {
+const validatePassword = password => {
   if (!password.length) {
     return { valid: false, error: "This field is required" };
   }
@@ -78,7 +90,8 @@ export const validatePassword = password => {
         data() {
             return {
                 input: {
-                    username: "",
+                    firstName: "",
+                    lastName: "",
                     password: "",
                     phone: "",
                     email: ""
@@ -91,6 +104,7 @@ export const validatePassword = password => {
                 error2:null,
                 error3:null,
                 error4:null,
+                error5:null,
                 users: []
             }
         },
@@ -100,9 +114,15 @@ export const validatePassword = password => {
 
               this.errors= {};
 
-              const validName = validateName(this.input.username);
-              this.errors.username = validName.error;
-              if (!validName.valid) {
+              const validFirstName = validateFirstName(this.input.firstName);
+              this.errors.firstName = validFirstName.error;
+              if (!validFirstName.valid) {
+                  this.valid = false;
+              }
+
+              const validLastName = validateLastName(this.input.lastName);
+              this.errors.lastName = validLastName.error;
+              if (!validLastName.valid) {
                   this.valid = false;
               }
 
@@ -133,7 +153,7 @@ export const validatePassword = password => {
             const validFields = Object.values(this.errors).every((error) => !error);
             if (validFields) {
               const user = {
-                name: this.input.username,
+                name: this.input.firstName,
                 password: this.input.password,
                 phone: this.input.phone,
                 email: this.input.email,
@@ -142,7 +162,8 @@ export const validatePassword = password => {
               this.message = 'Registration successful';
             } else {
               this.message = 'Please fix the errors and try again.';  
-              this.error1 = validName.error;
+              this.error1 = validFirstName.error;
+              this.error5 = validLastName.error;
               this.error2 = validPassword.error;
               this.error3 = validPhone.error;
               this.error4 = validEmail.error;
