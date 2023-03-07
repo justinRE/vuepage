@@ -38,6 +38,8 @@
 
 
 <script>
+import axios from 'axios';
+
 const validateFirstName = firstName => {
   if (!firstName.length) {
     return { valid: false, error: "This field is required" };
@@ -153,13 +155,23 @@ const validatePassword = password => {
             const validFields = Object.values(this.errors).every((error) => !error);
             if (validFields) {
               const user = {
-                name: this.input.firstName,
+                name: this.input.firstName + ' ' + this.input.lastName,
                 password: this.input.password,
                 phone: this.input.phone,
                 email: this.input.email,
               };
-              this.users.push(user);
+              const key = process.env.VUE_APP_KEY;
+              console.log(key);
+              axios.post("https://reiszfuncapim.azure-api.net/PostCustomer", user, {
+                headers: {
+                  'Ocp-Apim-Subscription-Key': key
+                }
+              })
+                .catch(err => {
+                  console.log(err);
+              });
               this.message = 'Registration successful';
+              
             } else {
               this.message = 'Please fix the errors and try again.';  
               this.error1 = validFirstName.error;
