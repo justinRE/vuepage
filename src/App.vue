@@ -2,10 +2,11 @@
   <div id="app">
     <div id="nav">
       <router-link to="/register">Register</router-link>
-      <router-link to="/forgot">Forgot password</router-link>
-      <router-link v-if="authenticated" to="/secure">Secure</router-link>
+      <router-link v-if="!authenticated" to="/forgot">Forgot password</router-link>
+      <router-link v-if="authenticated" to="/secure">Punch Card</router-link>
       <router-link v-if="authenticated" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
       <router-link v-else to="/login">Login</router-link>
+      <router-link v-if="authenticated" to="/Customers">Customers</router-link>
     </div>
     <router-view @authenticated="setAuthenticated"/>
   </div>
