@@ -160,11 +160,10 @@ const validatePassword = password => {
                 phone: this.input.phone,
                 email: this.input.email,
               };
-              const key = process.env.VUE_APP_KEY;
-              console.log(key);
+              
               axios.post("https://reiszfuncapim.azure-api.net/PostCustomer", user, {
                 headers: {
-                  'Ocp-Apim-Subscription-Key': key
+                  'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
                 }
               })
                 .catch(err => {

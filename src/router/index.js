@@ -22,10 +22,10 @@ const routes = [
     }
   },
   {
-    path: '/secure',
-    name: 'Secure',
+    path: '/card',
+    name: 'Card',
     component: function () {
-      return import(/* webpackChunkName: "register" */ '../views/Secure.vue')
+      return import(/* webpackChunkName: "Card" */ '../views/Card.vue')
     }
   },
   {

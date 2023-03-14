@@ -44,7 +44,7 @@ export default {
         Customers() {
             axios.get("https://reiszfuncapim.azure-api.net/GetCustomer", {
                     headers: {
-                    'Ocp-Apim-Subscription-Key': 'key'
+                    'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
                     }
              }).then(response => {
                 this.customerData = Object.values(response.data);
