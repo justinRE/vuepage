@@ -66,6 +66,9 @@ export default {
 .punch-row img {
   width: 50px;
   height: 50px;
+  margin-top: -1px;
+  margin-left: -1px;
+  margin-right: -1px;
 }
 
 .punched {
@@ -75,13 +78,16 @@ export default {
 .cup {
   width: 100px;
   height: 100px;
+  margin-top: -1px;
+  margin-left: -1px;
+  margin-right: -1px;
 }
 
 .left-cap,
 .right-cap {
   width: 20px;
   height: 50px;
-  margin-right: 0px;
+  margin-right: -1px;
 }
 
 .drinks {

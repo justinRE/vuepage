@@ -1,15 +1,21 @@
 <template>
-    <div id="login">
-        <h1>Login</h1>
-        <div class="form-inputs">
-            <label for="username">First/Last Name</label>
-            <input type="text" id="username" name="username" v-model="input.username" placeholder="First/Last Name" />
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-6 col-lg-4">
+                <h1 class="text-center mb-3">Login</h1>
+                <form>
+                    <div class="form-group">
+                        <label for="username">First/Last Name</label>
+                        <input type="text" class="form-control" id="username" name="username" v-model="input.username" placeholder="First/Last Name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" v-model="input.password" placeholder="Password" />
+                    </div>
+                    <button type="button" class="btn btn-primary btn-block" v-on:click="login()">Login</button>
+                </form>
+            </div>
         </div>
-        <div class="form-inputs">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" v-model="input.password" placeholder="Password" />
-        </div>
-        <button type="button" v-on:click="login()">Login</button>
     </div>
 </template>
 
@@ -41,15 +47,3 @@
         }
     }
 </script>
-
-<style>
-
-#login .form-inputs {
-    padding-bottom: 10px;
-}
-
-#login .form-inputs label {
-    padding-right: 10px;
-}
-
-</style>

@@ -1,39 +1,44 @@
 <template>
-  <div id="register">
-      <h1>Register</h1>
-      <div class="form-container">
-        <div class="form-inputs">
-            <label for="firstName">First Name</label>
-            <input type="text" id="firstName" name="firstName" v-model="input.firstName" placeholder="First Name" />
+  <div id="register" class="container">
+      <h1 class="text-center mb-5">Register</h1>
+      <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-4">
+          <form>
+            <div class="form-group">
+              <label for="firstName">First Name</label>
+              <input type="text" class="form-control" id="firstName" name="firstName" v-model="input.firstName" placeholder="First Name" />
+              <div class="invalid-feedback">{{error1}}</div>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name</label>
+              <input type="text" class="form-control" id="lastName" name="lastName" v-model="input.lastName" placeholder="Last Name" />
+              <div class="invalid-feedback">{{error5}}</div>
+            </div>
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" name="password" v-model="input.password" placeholder="Password" />
+              <div class="invalid-feedback">{{error2}}</div>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone Number</label>
+              <input type="phone" class="form-control" id="phone" name="phone" v-model="input.phone" placeholder="Phone Number" />
+              <div class="invalid-feedback">{{error3}}</div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" class="form-control" id="email" name="email" v-model="input.email" placeholder="Email Address" />
+              <div class="invalid-feedback">{{error4}}</div>
+            </div>
+            <button type="button" class="btn btn-primary" v-on:click="register()">Register</button>
+          </form>
+          <div class="mt-3">
+            <label>{{message}}</label> 
+          </div>
         </div>
-        <label>{{error1}}</label>
-        <div class="form-inputs">
-            <label for="lastName">Last Name</label>
-            <input type="text" id="lastName" name="lastName" v-model="input.lastName" placeholder="Last Name" />
-        </div>
-        <label>{{error5}}</label>
-        <div class="form-inputs">
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" v-model="input.password" placeholder="Password" />
-        </div>
-        <label>{{error2}}</label>
-        <div class="form-inputs">
-            <label for="phone">Phone Number</label>
-            <input type="phone" id="phone" name="phone" v-model="input.phone" placeholder="Phone Number" />
-        </div>
-        <label>{{error3}}</label>
-        <div class="form-inputs">
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" v-model="input.email" placeholder="Email Address" />
-        </div>
-        <label>{{error4}}</label> <br>
-      </div>
-      <button type="button" v-on:click="register()">Register</button>
-      <div>
-        <label>{{message}}</label> 
       </div>
   </div>
 </template>
+
 
 
 
@@ -160,7 +165,7 @@ const validatePassword = password => {
                 phone: this.input.phone,
                 email: this.input.email,
               };
-              
+
               axios.post("https://reiszfuncapim.azure-api.net/PostCustomer", user, {
                 headers: {
                   'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY

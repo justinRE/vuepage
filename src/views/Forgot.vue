@@ -1,13 +1,20 @@
 <template>
-    <div id="forgot">
-        <h1>Forgot password</h1>
-        <div class="form-inputs">
-            <label for="username">First/Last Name</label>
-            <input type="text" id="username" name="username" v-model="input.username" placeholder="First/Last Name" />
-         </div>
-        <button type="button" v-on:click="forgot()">Reset Password</button>
+    <div class="container" id="forgot">
+      <div class="row justify-content-center mt-5">
+        <div class="col-md-6 col-lg-4">
+          <h1 class="text-center mb-3">Forgot password</h1>
+          <form>
+            <div class="form-group">
+              <label for="username">First/Last Name</label>
+              <input type="text" id="username" name="username" v-model="input.username" class="form-control" placeholder="First/Last Name" />
+            </div>
+            <button type="button" v-on:click="forgot()" class="btn btn-primary btn-block">Reset Password</button>
+          </form>
+        </div>
+      </div>
     </div>
-</template>
+  </template>
+  
 
 <script>
 export default {

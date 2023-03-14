@@ -1,30 +1,32 @@
 <template>
-      <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Phone</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(customerData, index) in Object.values(customerData)" :key="index">
-          <td>{{ customerData.customerName }}</td>
-          <td>{{ customerData.customerEmail }}</td>
-          <td>{{ customerData.customerPhone }}</td>
-          <td>
-            <button @click="editCustomer(customerData)">Edit</button>
-            <button @click="deleteCustomer(customerData)">Delete</button>
-            <button @click="punchCustomer(customerData)">Punch</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-</template>
+    <div class="container">
+      <h1>Customer List</h1>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(customerData, index) in Object.values(customerData)" :key="index">
+              <td>{{ customerData.customerName }}</td>
+              <td>{{ customerData.customerEmail }}</td>
+              <td>{{ customerData.customerPhone }}</td>
+              <td>
+                <button class="btn btn-primary" @click="editCustomer(customerData)">Edit</button>
+                <button class="btn btn-danger" @click="deleteCustomer(customerData)">Delete</button>
+                <button class="btn btn-success" @click="punchCustomer(customerData)">Punch</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </template>
 
 
 <script>

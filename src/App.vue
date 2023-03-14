@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/register">Register</router-link>
+      <router-link v-if="!authenticated" to="/register">Register</router-link>
       <router-link v-if="!authenticated" to="/forgot">Forgot password</router-link>
       <router-link v-if="authenticated" to="/card">Punch Card</router-link>
       <router-link v-if="authenticated" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
