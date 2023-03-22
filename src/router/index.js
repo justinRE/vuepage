@@ -41,7 +41,14 @@ const routes = [
     component: function () {
       return import(/* webpackChunkName: "customers" */ '../views/Customers.vue')
     }
-  }
+  },
+  {
+    path: '/panel',
+    name: 'Panel',
+    component: function () {
+      return import(/* webpackChunkName: "panel" */ '../views/Panel.vue')
+    }
+  },
 ]
 
 const router = new VueRouter({
