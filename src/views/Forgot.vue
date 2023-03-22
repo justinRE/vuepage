@@ -5,8 +5,8 @@
           <h1 class="text-center mb-3">Forgot password</h1>
           <form>
             <div class="form-group">
-              <label for="username">First/Last Name</label>
-              <input type="text" id="username" name="username" v-model="input.username" class="form-control" placeholder="First/Last Name" />
+              <label for="email">Email Address</label>
+              <input type="text" id="email" name="email" v-model="input.username" class="form-control" placeholder="Email Address" />
             </div>
             <button type="button" v-on:click="forgot()" class="btn btn-primary btn-block">Reset Password</button>
           </form>
@@ -22,7 +22,7 @@ export default {
     data() {
         return {
             input: {
-                username: "",
+                email: "",
             }
         }
     },

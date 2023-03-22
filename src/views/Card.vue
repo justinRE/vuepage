@@ -1,47 +1,83 @@
 <template>
   <div class="punch-card">
     <h1>Punch card</h1>
-    <div class="punch-row">
-      <img class="left-cap" :src="require('@/assets/leftend.png')" />
-      <img
-        v-for="(punch, index) in 5"
-        :key="index"
-        :src="require('@/assets/BeanCard.png')"
-        :class="{ punched: index < punches }"
-      />
-      <img class="right-cap" :src="require('@/assets/rightEnd.png')" />
+   
+
+        <div class="card-wrapper">
+            <div id="card-1" :class="['card', 'card-rotating', {'is-flipped': flipped}]">
+              <div class="face front">
+
+              <!-- Image-->
+              <div class="card-up">
+                <div class="punch-row">
+          <img class="left-cap img-fluid" :src="require('@/assets/leftend.png')" />
+          <img
+            v-for="(punch, index) in 5"
+            :key="index"
+            :src="require('@/assets/BeanCard.png')"
+            :class="{ punched: index < punches }"
+          />
+          <img class="right-cap img-fluid" :src="require('@/assets/rightEnd.png')" />
+        </div>
+
+        <div class="punch-row">
+          <img class="left-cap img-fluid" :src="require('@/assets/leftend.png')" />
+          <img
+            v-for="(punch, index) in 4"
+            :key="index + 4"
+            :src="require('@/assets/BeanCard.png')"
+            :class="{ punched: index + 5 < punches }" />
+
+          <img
+            class="cup img-fluid"
+            :src="require('@/assets/CupCard.png')"
+            :class="{ punched: punches >= 10 }" />
+          <img class="right-cap img-fluid" :src="require('@/assets/rightEnd.png')" />
+        </div>
+
+          </div>
+
+          <!-- Content -->
+          <div class="card-body">
+            <h4 class="font-weight-bold mb-3">Number of Free Drinks: {{ freeDrinks }}</h4>
+            <!-- button -->
+          </div>
+          <a class="rotate-btn" @click="flipped = true">Click here to switch to QR code</a>
+          </div>
+          <div class="face back">
+          <div class="card-body">
+
+            <!-- Content -->
+            <p>
+              <form>
+                <input type="text" v-model="QRValue">
+              </form>
+              <qrcode-vue :value="QRValue" :size="300" level="H" />
+              <a class="rotate-btn" @click="flipped = false">Click here to switch to Punch Card</a>
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="punch-row">
-      <img class="left-cap" :src="require('@/assets/leftend.png')" />
-      <img
-        v-for="(punch, index) in 4"
-        :key="index + 4"
-        :src="require('@/assets/BeanCard.png')"
-        :class="{ punched: index + 5 < punches }" />
-
-      <img
-        class="cup"
-        :src="require('@/assets/CupCard.png')"
-        :class="{ punched: punches >= 10 }" />
-      <img class="right-cap" :src="require('@/assets/rightEnd.png')" />
-    </div>
-
-    <div class="drinks">
-      <label> Number of Free Drinks: {{ freeDrinks }} </label>
-    </div>
-    
   </div>
 </template>
 
 <script>
+import QrcodeVue from 'qrcode.vue'
+
 export default {
+  components:{
+    QrcodeVue
+  },
   name: "PunchCard",
   data() {
     return {
-      punches: 3,
+      punches: 5,
       freeDrinks: 2,
-    };
+      flipped: false,
+      QRValue: 12345,
+    }
   },
   methods: {
     addPunch() {
@@ -53,6 +89,7 @@ export default {
 
 <style lang="css">
 .punch-card {
+  align-items: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -98,5 +135,25 @@ export default {
   padding-top: 30px;
 }
 
+.card {
+  position: relative;
+  height: 500px;
+  width: 340px;
+  transform-style: preserve-3d;
+  transition: transform 0.8s;
+}
+
+.card.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.card .face {
+  position: absolute;
+  backface-visibility: hidden;
+}
+
+.card .back {
+  transform: rotateY(180deg);
+}
 
 </style>

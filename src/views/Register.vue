@@ -20,6 +20,11 @@
               <div class="invalid-feedback">{{error2}}</div>
             </div>
             <div class="form-group">
+              <label for="password">Verify Password</label>
+              <input type="password" class="form-control" id="password" name="password" v-model="input.password" placeholder="Password" />
+              <div class="invalid-feedback">{{error2}}</div>
+            </div>
+            <div class="form-group">
               <label for="phone">Phone Number</label>
               <input type="phone" class="form-control" id="phone" name="phone" v-model="input.phone" placeholder="Phone Number" />
               <div class="invalid-feedback">{{error3}}</div>
@@ -165,6 +170,14 @@ const validatePassword = password => {
                 phone: this.input.phone,
                 email: this.input.email,
               };
+              axios.put('https://management.azure.com/subscriptions/a446f746-85e4-4d30-95fb-d9ae7fe24c41/resourceGroups/demo/providers/Microsoft.ApiManagement/service/reiszFuncApim/users/{userId}?api-version=2022-08-01', 
+              user, {
+                headers: {
+                'email': "",
+                'firstName': "",
+                'lastName': ""
+              }
+              }),
 
               axios.post("https://reiszfuncapim.azure-api.net/PostCustomer", user, {
                 headers: {
@@ -191,6 +204,7 @@ const validatePassword = password => {
 </script>
 
 <style>
+
 #register .form-container {
   display: flex;
   flex-direction: column;
