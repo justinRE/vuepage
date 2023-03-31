@@ -1,3 +1,6 @@
+meta: {
+  requiresAuth: true
+}
 <template>
   <div class="punch-card">
     <h1>Punch card</h1>

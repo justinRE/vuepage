@@ -37,9 +37,15 @@
       return {};
     },
     methods: {
-      openRedeemRewards() {},
-      openCustomers() {},
-      openPunchCard() {},
+      openRedeemRewards() {
+        this.$router.push('/scanrewards')
+      },
+      openCustomers() {
+        this.$router.push('/customers')
+      },
+      openPunchCard() {
+        this.$router.push('/scanpunches')
+      },
     },
   };
   </script>

@@ -1,5 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Auth from '@okta/okta-vue'
+
+Vue.use(Auth, {
+  issuer: 'https://Dev-71617988.okta.com/oauth2/default',
+  client_id: '0oa8xojnpxKG707955d7',
+  redirect_uri: 'http://localhost:8080/login/callback',
+  scope: 'openid profile email'
+})
 
 Vue.use(VueRouter)
 
@@ -26,6 +34,9 @@ const routes = [
     name: 'Card',
     component: function () {
       return import(/* webpackChunkName: "card" */ '../views/Card.vue')
+    },
+    meta: {
+      requiresAuth: true
     }
   },
   {
@@ -40,15 +51,45 @@ const routes = [
     name: 'Customers',
     component: function () {
       return import(/* webpackChunkName: "customers" */ '../views/Customers.vue')
+    },
+    meta: {
+      requiresAuth: true
     }
   },
   {
-    path: '/panel',
+    path: '/adminpanel',
     name: 'Panel',
     component: function () {
       return import(/* webpackChunkName: "panel" */ '../views/Panel.vue')
+    },
+    meta: {
+      requiresAuth: false
     }
   },
+  {
+    path: '/scanpunches',
+    name: 'PunchScan',
+    component: function () {
+      return import(/* webpackChunkName: "PunchScan" */ '../views/PunchScan.vue')
+    },
+    meta: {
+      requiresAuth: false
+    },
+  },
+  {
+    path: '/scanrewards',
+    name: 'RewardScan',
+    component: function () {
+      return import(/* webpackChunkName: "RewardScan" */ '../views/RewardScan.vue')
+    },
+    meta: {
+      requiresAuth: true
+    },
+  },
+  {
+    path: '/login/callback',
+    component: Auth.handleCallback()
+  }
 ]
 
 const router = new VueRouter({
@@ -56,5 +97,7 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
+
+router.beforeEach(Vue.prototype.$auth.authRedirectGuard())
 
 export default router
