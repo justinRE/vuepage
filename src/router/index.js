@@ -1,13 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Auth from '@okta/okta-vue'
+import { LoginCallback, navigationGuard } from '@okta/okta-vue'
+import ProfileComponent from '@/components/Profile'
 
-Vue.use(Auth, {
-  issuer: 'https://Dev-71617988.okta.com/oauth2/default',
-  client_id: '0oa8xojnpxKG707955d7',
-  redirect_uri: 'http://localhost:8080/login/callback',
-  scope: 'openid profile email'
-})
 
 Vue.use(VueRouter)
 
@@ -23,13 +19,6 @@ const routes = [
       }
   },
   {
-    path: '/forgot',
-    name: 'Forgot',
-    component: function () {
-      return import(/* webpackChunkName: "forgot" */ '../views/Forgot.vue')
-    }
-  },
-  {
     path: '/card',
     name: 'Card',
     component: function () {
@@ -37,13 +26,6 @@ const routes = [
     },
     meta: {
       requiresAuth: true
-    }
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: function () {
-      return import(/* webpackChunkName: "login" */ '../views/Login.vue')
     }
   },
   {
@@ -88,7 +70,11 @@ const routes = [
   },
   {
     path: '/login/callback',
-    component: Auth.handleCallback()
+    component: LoginCallback
+  },
+  {
+    path: '/profile',
+    component: ProfileComponent,
   }
 ]
 
@@ -98,6 +84,6 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach(Vue.prototype.$auth.authRedirectGuard())
+router.beforeEach(navigationGuard)
 
 export default router

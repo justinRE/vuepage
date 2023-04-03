@@ -1,13 +1,13 @@
 <template>
   <div id="app">
     <div id="nav">
+      <button v-if="authState && authState.isAuthenticated" @click="logout" class="btn-logout">Logout</button>
+      <button v-else @click="login" class="btn-login">Login</button>
       <router-link v-if="!authenticated" to="/register">Register</router-link>
-      <router-link v-if="!authenticated" to="/forgot">Forgot password</router-link>
       <router-link v-if="authenticated" to="/card">Punch Card</router-link>
       <router-link v-if="authenticated" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
-      <router-link v-else to="/login">Login</router-link>
       <router-link v-if="authenticated" to="/Customers">Customers</router-link>
-    </div>
+      </div>
     <router-view @authenticated="setAuthenticated"/>
   </div>
 </template>
@@ -15,23 +15,15 @@
 <script>
     export default {
         name: 'App',
-        data() {
-            return {
-                authenticated: false,
-                // this is only for testing purposes no actual app will have this
-                // an api call will validate user credentials
-                mockAccount: {
-                    username: "admin",
-                    password: "admin"
-                }
-            }
-        },
         methods: {
             setAuthenticated(status) {
                 this.authenticated = status;
             },
-            logout() {
-                this.authenticated = false;
+            async login () {
+              await this.$auth.signInWithRedirect({ originalUri: '/' })
+            },
+          async logout () {
+            await this.$auth.signOut()
             }
         }
     }
@@ -65,4 +57,26 @@
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+.btn-login,
+.btn-logout {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px;
+  text-decoration: none;
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.btn-login:hover,
+.btn-logout:hover {
+  text-decoration: underline;
+}
+
 </style>
