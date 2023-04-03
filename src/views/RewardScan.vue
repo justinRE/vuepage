@@ -1,9 +1,11 @@
 <template>
-    <p> Scan Punches</p>
+    <container>
+        <p> Scan Punches</p>
     <p>{{ error }}</p>
     <p> {{ decodedString }}</p>
 <qrcode-stream @init="onInit" @decode="onDecode"> </qrcode-stream>
 <button @click="torch=!torch">Toggle device flashlight</button>
+    </container>
 </template>
 
 <script>
