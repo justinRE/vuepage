@@ -3,10 +3,10 @@
     <div id="nav">
       <button v-if="isAuthenticated" @click="logout" class="btn-logout">Logout</button>
       <button v-else @click="login" class="btn-login">Login</button>
-      <router-link v-if="!isAuthenticated" to="/register">Register</router-link>
-      <router-link v-if="isAuthenticated" to="/card">Punch Card</router-link>
-      <router-link v-if="isAuthenticated" to="/customers">Customers</router-link>
-      <router-link v-if="isAuthenticated" to="/adminpanel">Admin Panel</router-link>
+      <router-link v-if="!isAuthenticatedPromiseResult" to="/register">Register</router-link>
+      <router-link v-if="isAuthenticatedPromiseResult" to="/card">Punch Card</router-link>
+      <router-link v-if="isAuthenticatedPromiseResult" to="/customers">Customers</router-link>
+      <router-link v-if="isAuthenticatedPromiseResult" to="/adminpanel">Admin Panel</router-link>
     </div>
     <router-view @authenticated="setAuthenticated"/>
   </div>
@@ -15,30 +15,40 @@
 <script>
 export default {
   name: 'App',
+  data() {
+    return {
+      isAuthenticated: null,
+    };
+  },
   computed: {
-    isAuthenticated() {
-      return this.$auth.isAuthenticated()
+    isAuthenticatedPromiseResult() {
+      return this.isAuthenticated === true;
     },
   },
   methods: {
     setAuthenticated(status) {
-    this.$data.authenticated = status
+      this.isAuthenticated = status;
     },
     async login() {
-      await this.$auth.signInWithRedirect({ originalUri: '/' })
+      await this.$auth.signInWithRedirect({ originalUri: '/card' })
     },
     async logout() {
-    console.log("Logging out...")
-    await this.$auth.signOut()
-    console.log("Logged out.")
+      console.log("Logging out...")
+      await this.$auth.signOut()
+      console.log("Logged out.")
+      this.isAuthenticated = false;
+      router.push('/register');
     }
   },
   created() {
-  console.log("isAuthenticated:", this.isAuthenticated)
-}
-
+    this.$auth.isAuthenticated().then((result) => {
+      this.isAuthenticated = result;
+      console.log("isAuthenticated:", result);
+    });
+  }
 }
 </script>
+
 
 
 <style>

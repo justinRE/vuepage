@@ -7,34 +7,34 @@
             <div class="form-group">
               <label for="firstName">First Name</label>
               <input type="text" class="form-control" id="firstName" name="firstName" v-model="input.firstName" placeholder="First Name" />
-              <div class="invalid-feedback">{{error1}}</div>
+              <div class="invalid-feedback">{{firstNameError}}</div>
             </div>
             <div class="form-group">
               <label for="lastName">Last Name</label>
               <input type="text" class="form-control" id="lastName" name="lastName" v-model="input.lastName" placeholder="Last Name" />
-              <div class="invalid-feedback">{{error5}}</div>
+              <div class="invalid-feedback">{{lastNameError}}</div>
             </div>
             <div class="form-group">
               <label for="password">Password</label>
               <input type="password" class="form-control" id="password" name="password" v-model="input.password" placeholder="Password" />
-              <div class="invalid-feedback">{{error2}}</div>
+              <div class="invalid-feedback">{{passwordError}}</div>
             </div>
             <div class="form-group">
-              <label for="password">Verify Password</label>
-              <input type="password" class="form-control" id="password" name="password" v-model="input.password" placeholder="Password" />
-              <div class="invalid-feedback">{{error2}}</div>
+              <label for="verifyPassword">Verify Password</label>
+              <input type="password" class="form-control" id="verifyPassword" name="verifyPassword" v-model="input.verifyPassword" placeholder="verifyPassword" />
+              <div class="invalid-feedback">{{passwordVerifyError}}</div>
             </div>
             <div class="form-group">
               <label for="phone">Phone Number</label>
               <input type="phone" class="form-control" id="phone" name="phone" v-model="input.phone" placeholder="Phone Number" />
-              <div class="invalid-feedback">{{error3}}</div>
+              <div class="invalid-feedback">{{phoneError}}</div>
             </div>
             <div class="form-group">
               <label for="email">Email Address</label>
               <input type="email" class="form-control" id="email" name="email" v-model="input.email" placeholder="Email Address" />
-              <div class="invalid-feedback">{{error4}}</div>
+              <div class="invalid-feedback">{{emailError}}</div>
             </div>
-            <button type="button" class="btn btn-primary" v-on:click="register()">Register</button>
+            <button type="button" class="btn btn-primary" v-on:click="register(), submit()" >Register</button>
           </form>
           <div class="mt-3">
             <label>{{message}}</label> 
@@ -106,18 +106,20 @@ const validatePassword = password => {
                     lastName: "",
                     password: "",
                     phone: "",
-                    email: ""
+                    email: "",
                 },
                 valid: true,
                 success: false,
                 errors:{},
                 message: null,
-                error1:null,
-                error2:null,
-                error3:null,
-                error4:null,
-                error5:null,
-                users: []
+                firstNameError:null,
+                passwordError:null,
+                phoneError:null,
+                emailError:null,
+                lastNameError:null,
+                users: [],
+                passwordVerifyError: null,
+                verifyPassword: "",
             }
         },
 
@@ -191,16 +193,22 @@ const validatePassword = password => {
               
             } else {
               this.message = 'Please fix the errors and try again.';  
-              this.error1 = validFirstName.error;
-              this.error5 = validLastName.error;
-              this.error2 = validPassword.error;
-              this.error3 = validPhone.error;
-              this.error4 = validEmail.error;
+              this.firstNameError = validFirstName.error;
+              this.lastNameError = validLastName.error;
+              this.passwordError = validPassword.error;
+              this.phoneError = validPhone.error;
+              this.emailError = validEmail.error;
             }
 
-          }
-      }
+          },
+            submit() {
+              if (this.password !== this.verifyPassword) {
+                this.passwordVerifyError = 'Passwords do not match';
+                return;
+              }
+      },
     }
+  }
 </script>
 
 <style>
