@@ -34,7 +34,7 @@
               <input type="email" class="form-control" id="email" name="email" v-model="input.email" placeholder="Email Address" />
               <div class="invalid-feedback">{{emailError}}</div>
             </div>
-            <button type="button" class="btn btn-primary" v-on:click="register(), submit()" >Register</button>
+            <button type="button" class="btn btn-primary" v-on:click="verifyPass(), register()" >Register</button>
           </form>
           <div class="mt-3">
             <label>{{message}}</label> 
@@ -201,7 +201,7 @@ const validatePassword = password => {
             }
 
           },
-            submit() {
+            verifyPass() {
               if (this.password !== this.verifyPassword) {
                 this.passwordVerifyError = 'Passwords do not match';
                 return;
