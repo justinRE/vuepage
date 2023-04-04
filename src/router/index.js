@@ -3,20 +3,28 @@ import VueRouter from 'vue-router'
 import Auth from '@okta/okta-vue'
 import { LoginCallback, navigationGuard } from '@okta/okta-vue'
 import ProfileComponent from '@/components/Profile'
-
+import { OktaAuth } from '@okta/okta-auth-js'
 
 Vue.use(VueRouter)
+
+const oktaAuth= new OktaAuth({
+  clientId: '0oa8xojnpxKG707955d7',
+  issuer: 'https://dev-71617988.okta.com/oauth2/default',
+  redirectUri: window.location.origin + '/login/callback',
+})
+
+Vue.use(Auth, { oktaAuth })
 
 const routes = [
   {
     path: '/register',
     name: 'Register',
-      // route level code-splitting
-      // this generates a separate chunk (Register.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: function () {
-        return import(/* webpackChunkName: "register" */ '../views/Register.vue')
-      }
+    component: function () {
+      return import(/* webpackChunkName: "register" */ '../views/Register.vue')
+    },
+    meta: {
+      requiresAuth: false
+    }
   },
   {
     path: '/card',
@@ -45,7 +53,7 @@ const routes = [
       return import(/* webpackChunkName: "panel" */ '../views/Panel.vue')
     },
     meta: {
-      requiresAuth: false
+      requiresAuth: true
     }
   },
   {
@@ -55,8 +63,8 @@ const routes = [
       return import(/* webpackChunkName: "PunchScan" */ '../views/PunchScan.vue')
     },
     meta: {
-      requiresAuth: false
-    },
+      requiresAuth: true
+    }
   },
   {
     path: '/scanrewards',
@@ -66,15 +74,19 @@ const routes = [
     },
     meta: {
       requiresAuth: true
-    },
+    }
+  },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: ProfileComponent,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: '/login/callback',
     component: LoginCallback
-  },
-  {
-    path: '/profile',
-    component: ProfileComponent,
   }
 ]
 

@@ -32,47 +32,42 @@
 <script>
 import axios from 'axios';
 
-
 export default {
-        name: 'Customers', 
-        data() {
-            return {
-                customerData: [],
-                message: null
-            }
-        },
-
-    methods: {
-        Customers() {
-            axios.get("https://reiszfuncapim.azure-api.net/GetCustomer", {
-                    headers: {
-                    'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
-                    }
-             }).then(response => {
-                this.customerData = Object.values(response.data);
-             }).catch(err => {
-                console.log(err);
-            });
-        },
-
-        editCustomer() {
+  name: 'Customers', 
+  data() {
+    return {
+      customerData: [],
+      message: null
+    }
+  },
+  methods: {
+    Customers() {
+      axios.get("https://reiszfuncapim.azure-api.net/GetCustomer", {
+        headers: {
+          'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+        }
+      }).then(response => {
+        this.customerData = Object.values(response.data);
+      }).catch(err => {
+        console.log(err);
+      });
+    },
+    editCustomer() {
       // handle edit button here
     },
-        deleteCustomer() {
+    deleteCustomer() {
       // handle delete button here
     },
-        punchCustomer() {
+    punchCustomer() {
       // handle punch button here
     }
   },
-    mounted() {
-        this.Customers();
-        if(!this.$parent.authenticated) {
-                this.$router.replace({ name: "Login" });
-            }
+  created() {
+    this.Customers();
   }
 }
 </script>
+
 
 
 <style lang="css">

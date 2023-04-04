@@ -1,33 +1,45 @@
 <template>
   <div id="app">
     <div id="nav">
-      <button v-if="authState && authState.isAuthenticated" @click="logout" class="btn-logout">Logout</button>
+      <button v-if="isAuthenticated" @click="logout" class="btn-logout">Logout</button>
       <button v-else @click="login" class="btn-login">Login</button>
-      <router-link v-if="!authenticated" to="/register">Register</router-link>
-      <router-link v-if="authenticated" to="/card">Punch Card</router-link>
-      <router-link v-if="authenticated" to="/login" v-on:click.native="logout()" replace>Logout</router-link>
-      <router-link v-if="authenticated" to="/Customers">Customers</router-link>
-      </div>
+      <router-link v-if="!isAuthenticated" to="/register">Register</router-link>
+      <router-link v-if="isAuthenticated" to="/card">Punch Card</router-link>
+      <router-link v-if="isAuthenticated" to="/customers">Customers</router-link>
+      <router-link v-if="isAuthenticated" to="/adminpanel">Admin Panel</router-link>
+    </div>
     <router-view @authenticated="setAuthenticated"/>
   </div>
 </template>
 
 <script>
-    export default {
-        name: 'App',
-        methods: {
-            setAuthenticated(status) {
-                this.authenticated = status;
-            },
-            async login () {
-              await this.$auth.signInWithRedirect({ originalUri: '/' })
-            },
-          async logout () {
-            await this.$auth.signOut()
-            }
-        }
+export default {
+  name: 'App',
+  computed: {
+    isAuthenticated() {
+      return this.$auth.isAuthenticated()
+    },
+  },
+  methods: {
+    setAuthenticated(status) {
+    this.$data.authenticated = status
+    },
+    async login() {
+      await this.$auth.signInWithRedirect({ originalUri: '/' })
+    },
+    async logout() {
+    console.log("Logging out...")
+    await this.$auth.signOut()
+    console.log("Logged out.")
     }
+  },
+  created() {
+  console.log("isAuthenticated:", this.isAuthenticated)
+}
+
+}
 </script>
+
 
 <style>
 
