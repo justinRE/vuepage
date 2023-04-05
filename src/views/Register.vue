@@ -172,15 +172,6 @@ const validatePassword = password => {
                 phone: this.input.phone,
                 email: this.input.email,
               };
-              axios.put('https://management.azure.com/subscriptions/a446f746-85e4-4d30-95fb-d9ae7fe24c41/resourceGroups/demo/providers/Microsoft.ApiManagement/service/loyaltygateway/users/{userId}?api-version=2022-08-01', 
-              user, {
-                headers: {
-                'email': "",
-                'firstName': "",
-                'lastName': ""
-              }
-              }),
-
               axios.post("https://loyaltygateway.azure-api.net/PostCustomer", user, {
                 headers: {
                   'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
@@ -189,6 +180,7 @@ const validatePassword = password => {
                 .catch(err => {
                   console.log(err);
               });
+              // need to change this to make sure post request was successful first
               this.message = 'Registration successful';
               
             } else {
