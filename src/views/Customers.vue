@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     Customers() {
-      axios.get("https://reiszfuncapim.azure-api.net/GetCustomer", {
+      axios.get("https://loyaltygateway.azure-api.net/GetCustomer", {
         headers: {
           'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
         }
