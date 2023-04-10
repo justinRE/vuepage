@@ -1,6 +1,3 @@
-meta: {
-  requiresAuth: true
-}
 <template>
   <div class="punch-card">
     <h1>Punch card</h1>
@@ -91,12 +88,13 @@ export default {
   },
   async created() {
     try {
-      const response = await axios.get(`https://collidegateway.azure-api.net/GetCustomerByName/${encodeURIComponent(this.userName)}`, {
+      var cusName = encodeURIComponent(this.userName);
+      const response = await axios.get(`https://collidegateway.azure-api.net/GetCustomerByName/${cusName}`, {
         headers: {
           'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
         }
-      })
-      this.punches = response.data.punches
+      })  
+      this.punches = response.data[0].customerPunches
     } catch (error) {
       console.error(error)
     }
