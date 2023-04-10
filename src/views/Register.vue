@@ -172,7 +172,7 @@ const validatePassword = password => {
                 phone: this.input.phone,
                 email: this.input.email,
               };
-              axios.post("https://loyaltygateway.azure-api.net/PostCustomer", user, {
+              axios.post("https://https://collidegateway.azure-api.net/PostCustomer", user, {
                 headers: {
                   'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
                 }

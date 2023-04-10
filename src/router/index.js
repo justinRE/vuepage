@@ -87,6 +87,10 @@ const routes = [
   {
     path: '/login/callback',
     component: LoginCallback
+  },
+  {
+    path: '/test',
+    name: 'test',
   }
 ]
 

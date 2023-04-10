@@ -1,4 +1,6 @@
 <template>
+  <div>
+    <p>Welcome, {{ userName }}!</p>
     <table>
       <thead>
         <tr>
@@ -16,20 +18,45 @@
         </tr>
       </tbody>
     </table>
-  </template>
-  
-  <script>
-  export default {
-    name: 'Profile',
-    data () {
-      return {
-        claims: []
-      }
-    },
-    async created () {
-      const idToken = await this.$auth.tokenManager.get('idToken')
-      this.claims = await Object.entries(idToken.claims).map(entry => ({ claim: entry[0], value: entry[1] }))
+  </div>
+</template>
+
+<template>
+  <table>
+    <thead>
+      <tr>
+        <th>Claim</th>
+        <th>Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(claim, index) in claims" :key="index">
+        <td>{{claim.claim}}</td>
+        <td :id="'claim-' + claim.claim">{{claim.value}}</td>
+      </tr>
+    </tbody>
+  </table>
+</template>
+
+<script>
+import { mapActions } from 'vuex'
+
+export default {
+  name: 'Profile',
+  data() {
+    return {
+      claims: []
     }
+  },
+  async created() {
+    const idToken = await this.$auth.tokenManager.get('idToken')
+    this.claims = await Object.entries(idToken.claims).map(entry => ({ claim: entry[0], value: entry[1] }))
+    this.setUserName(this.claims.find(claim => claim.claim === 'name').value)
+  },
+  methods: {
+    ...mapActions(['setUserName'])
   }
-  </script>
-  
+}
+</script>
+
+

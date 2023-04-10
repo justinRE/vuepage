@@ -68,6 +68,8 @@ meta: {
 
 <script>
 import QrcodeVue from 'qrcode.vue'
+import { mapState } from 'vuex'
+import axios from 'axios';
 
 export default {
   components:{
@@ -76,10 +78,10 @@ export default {
   name: "PunchCard",
   data() {
     return {
-      punches: 5,
+      punches: 0,
       freeDrinks: 2,
       flipped: false,
-      QRValue: 12345,
+      QRValue: "12345",
     }
   },
   methods: {
@@ -87,6 +89,21 @@ export default {
       this.punches++;
     },
   },
+  async created() {
+    try {
+      const response = await axios.get(`https://collidegateway.azure-api.net/GetCustomerByName/${encodeURIComponent(this.userName)}`, {
+        headers: {
+          'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+        }
+      })
+      this.punches = response.data.punches
+    } catch (error) {
+      console.error(error)
+    }
+  },
+  computed: {
+    ...mapState(['userName'])
+  }
 };
 </script>
 
