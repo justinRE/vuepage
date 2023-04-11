@@ -3,10 +3,9 @@
     <h1>Punch card</h1>
    
 
-        <div class="card-wrapper">
-            <div id="card-1" :class="['card', 'card-rotating', {'is-flipped': flipped}]">
+    <div class="card-wrapper" @click="flipped = !flipped">
+          <div id="card-1" :class="['card', 'card-rotating', {'is-flipped': flipped}]">
               <div class="face front">
-
               <!-- Image-->
               <div class="card-up">
                 <div class="punch-row">
@@ -41,19 +40,15 @@
           <div class="card-body">
             <h4 class="font-weight-bold mb-3">Number of Free Drinks: {{ freeDrinks }}</h4>
             <!-- button -->
+            <div class="hint" v-if="!flipped">Click anywhere to flip</div> <!-- Add this line for hint -->
           </div>
-          <a class="rotate-btn" @click="flipped = true">Click here to switch to QR code</a>
           </div>
           <div class="face back">
           <div class="card-body">
 
             <!-- Content -->
             <p>
-              <form>
-                <input type="text" v-model="QRValue">
-              </form>
-              <qrcode-vue :value="QRValue" :size="300" level="H" />
-              <a class="rotate-btn" @click="flipped = false">Click here to switch to Punch Card</a>
+              <qrcode-vue :value="userEmail" :size="300" level="H" />
             </p>
           </div>
         </div>
@@ -76,9 +71,9 @@ export default {
   data() {
     return {
       punches: 0,
-      freeDrinks: 2,
+      freeDrinks: 0,
       flipped: false,
-      QRValue: "12345",
+      userEmail: "",
     }
   },
   methods: {
@@ -94,16 +89,25 @@ export default {
           'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
         }
       })  
-      this.punches = response.data[0].customerPunches
+      this.punches = response.data[0].customerPunches;
+      this.userEmail = response.data[0].customerEmail;
     } catch (error) {
       console.error(error)
     }
   },
   computed: {
-    ...mapState(['userName'])
+    ...mapState(['userName']),
+    initialFreeDrinks() {
+      const freeDrinks = Math.floor(this.cardPunches / 10);
+      return freeDrinks < 1 ? 0 : freeDrinks;
+    }
   }
 };
 </script>
+
+
+
+
 
 <style lang="css">
 .punch-card {
