@@ -83,6 +83,7 @@ export default {
   },
   async created() {
     try {
+      //instead of name I want customer id to make sure it's the right one
       var cusName = encodeURIComponent(this.userName);
       const response = await axios.get(`https://collidegateway.azure-api.net/GetCustomerByName/${cusName}`, {
         headers: {

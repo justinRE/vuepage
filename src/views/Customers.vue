@@ -1,32 +1,38 @@
 <template>
-    <div class="container">
-      <h1>Customer List</h1>
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Phone</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(customerData, index) in Object.values(customerData)" :key="index">
-              <td>{{ customerData.customerName }}</td>
-              <td>{{ customerData.customerEmail }}</td>
-              <td>{{ customerData.customerPhone }}</td>
-              <td>
-                <button class="btn btn-primary" @click="editCustomer(index)">Edit</button>
-                <button class="btn btn-danger" @click="deleteCustomer(index)">Delete</button>
-                <button class="btn btn-success" @click="punchCustomer(index)">Punch</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  <div class="container">
+    <h1>Customer List</h1>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(customerData, index) in Object.values(customerData)" :key="index">
+            <td v-if="!customerData.editing">{{ customerData.customerName }}</td>
+            <td v-else><input v-model="customerData.editedName" type="text"></td>
+            <td v-if="!customerData.editing">{{ customerData.customerEmail }}</td>
+            <td v-else><input v-model="customerData.editedEmail" type="text"></td>
+            <td v-if="!customerData.editing">{{ customerData.customerPhone }}</td>
+            <td v-else><input v-model="customerData.editedPhone" type="text"></td>
+            <td>
+              <button class="btn btn-primary" @click="customerData.editing ? saveCustomer(index) : editCustomer(index)">
+                {{ customerData.editing ? 'Save' : 'Edit' }}
+              </button>
+              <button class="btn btn-danger" @click="deleteCustomer(index)">Delete</button>
+              <button class="btn btn-success" @click="punchCustomer(index)">Punch</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </template>
+  </div>
+</template>
+
 
 
 <script>
@@ -53,9 +59,52 @@ export default {
         console.log(err);
       });
     },
-    editCustomer() {
-      // handle edit button   here
-    },
+
+
+    editCustomer(index) {
+  const customerData = Object.values(this.customerData)[index];
+  if (customerData) {
+    this.$set(customerData, 'editing', true);
+    this.$set(customerData, 'editedName', customerData.customerName);
+    this.$set(customerData, 'editedEmail', customerData.customerEmail);
+    this.$set(customerData, 'editedPhone', customerData.customerPhone);
+  } else {
+    console.error(`Customer data at index ${index} is undefined`);
+  }
+},
+
+saveCustomer(index) {
+  const customerData = Object.values(this.customerData)[index];
+  if (customerData) {
+    customerData.customerName = customerData.editedName;
+    customerData.customerEmail = customerData.editedEmail;
+    customerData.customerPhone = customerData.editedPhone;
+
+    const customerId = customerData.id; 
+    const customerName = customerData.customerName; 
+    const customerEmail = customerData.customerEmail; 
+    const customerPhone = customerData.customerPhone; 
+
+    //post customer will create a new customer which isn't what I want, I need a new method that works something like this. 
+    axios.post(`https://collidegateway.azure-api.net/UpdateCustomer/${customerId}`, {
+      name: customerName,
+      email: customerEmail,
+      phone: customerPhone
+    }, {
+      headers: {
+        'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+      }
+    }).then(response => {
+      console.log('Customer data updated successfully', response.data);
+      // Set editing property to false to disable editing mode
+      this.$set(customerData, 'editing', false);
+    }).catch(error => {
+      console.error('Failed to update customer data', error);
+    });
+  } else {
+    console.error(`Customer data at index ${index} is undefined`);
+  }
+},
     deleteCustomer(index) {
       // Check if customerData array is not empty
       if (this.customerData.length > 0) {

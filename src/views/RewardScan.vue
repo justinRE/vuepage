@@ -10,6 +10,9 @@
 
 <script>
 import {QrcodeStream} from 'vue-qrcode-reader'
+import { mapState } from 'vuex'
+
+
 export default {
     data(){
         return{
@@ -45,10 +48,20 @@ export default {
             // hide loading indicator
             }
         },
-        onDecode(decodedString){
+        onDecode(decodedString) {
             this.decodedString = decodedString;
-            //window.location.replace(decodedString);
-        }
+            //instead of name I want customer id to make sure it's the right one
+            var cusName = encodeURIComponent(this.userName);
+            axios.post(`https://https://collidegateway.azure-api.net/RewardCustomer/${cusName}`, { punchData: decodedString })
+                .then(response => {
+                this.error = 'Scanned successfully';
+                })
+                .catch(error => {
+                this.error = 'Failed to add punch';
+                });
+        },
+
+
     }
 }
 </script>

@@ -88,10 +88,11 @@ const routes = [
     path: '/login/callback',
     component: LoginCallback
   },
-  {
-    path: '/test',
-    name: 'test',
-  }
+    // Add catch-all route to redirect virtual routes to index.html
+    {
+      path: '*',
+      redirect: { name: 'Register' } // Change the name of the default route
+    }
 ]
 
 const router = new VueRouter({

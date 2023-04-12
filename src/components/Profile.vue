@@ -1,6 +1,7 @@
 <template>
   <div>
     <p>Welcome, {{ userName }}!</p>
+    <p>Welcome, {{ userId }}!</p>
     <table>
       <thead>
         <tr>
@@ -52,9 +53,11 @@ export default {
     const idToken = await this.$auth.tokenManager.get('idToken')
     this.claims = await Object.entries(idToken.claims).map(entry => ({ claim: entry[0], value: entry[1] }))
     this.setUserName(this.claims.find(claim => claim.claim === 'name').value)
+    this.setUserId(this.claims.find(claim=> claim.claim === 'id').value)
   },
   methods: {
-    ...mapActions(['setUserName'])
+    ...mapActions(['setUserName']),
+    ...mapActions(['setUserId'])
   }
 }
 </script>
