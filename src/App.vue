@@ -30,7 +30,7 @@ export default {
       this.isAuthenticated = status;
     },
     async login() {
-      await this.$auth.signInWithRedirect({ originalUri: '/card' }).finally(
+      await this.$auth.signInWithRedirect({ originalUri: '/profile' }).finally(
         {
           // if succesfully logged in, then post to to your azure function store user api
         }
