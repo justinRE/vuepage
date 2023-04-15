@@ -86,9 +86,9 @@ export default {
   async created() {
     try {
       //instead of name I want customer id to make sure it's the right one
-      var cusEmail = this.email
+      var cusEmail = encodeURIComponent(this.email)
       console.log(cusEmail)
-      const response = await axios.get(`https://${store.state.apim}/GetCustomerByEmail/${cusEmail}`, {
+      const response = await axios.get(`https://${store.state.apim}/GetCustomerPunches/${cusEmail}`, {
         headers: {
           'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
         }

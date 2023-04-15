@@ -1,46 +1,9 @@
 <template>
-  <div id="register" class="container">
-      <h1 class="text-center mb-5">Register</h1>
-      <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-4">
-          <form>
-            <div class="form-group">
-              <label for="firstName">First Name</label>
-              <input type="text" class="form-control" id="firstName" name="firstName" v-model="input.firstName" placeholder="First Name" />
-              <div class="invalid-feedback">{{firstNameError}}</div>
-            </div>
-            <div class="form-group">
-              <label for="lastName">Last Name</label>
-              <input type="text" class="form-control" id="lastName" name="lastName" v-model="input.lastName" placeholder="Last Name" />
-              <div class="invalid-feedback">{{lastNameError}}</div>
-            </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input type="password" class="form-control" id="password" name="password" v-model="input.password" placeholder="Password" />
-              <div class="invalid-feedback">{{passwordError}}</div>
-            </div>
-            <div class="form-group">
-              <label for="verifyPassword">Verify Password</label>
-              <input type="password" class="form-control" id="verifyPassword" name="verifyPassword" v-model="input.verifyPassword" placeholder="verifyPassword" />
-              <div class="invalid-feedback">{{passwordVerifyError}}</div>
-            </div>
-            <div class="form-group">
-              <label for="phone">Phone Number</label>
-              <input type="phone" class="form-control" id="phone" name="phone" v-model="input.phone" placeholder="Phone Number" />
-              <div class="invalid-feedback">{{phoneError}}</div>
-            </div>
-            <div class="form-group">
-              <label for="email">Email Address</label>
-              <input type="email" class="form-control" id="email" name="email" v-model="input.email" placeholder="Email Address" />
-              <div class="invalid-feedback">{{emailError}}</div>
-            </div>
-            <button type="button" class="btn btn-primary" v-on:click="verifyPass(), register()" >Register</button>
-          </form>
-          <div class="mt-3">
-            <label>{{message}}</label> 
-          </div>
-        </div>
-      </div>
+   <div style="text-align: center; padding:0% 20% 20% 20%">
+    <h3>Collide Loyalty Program</h3>
+    At Collide, we invite everyone to be a part of the good. For us, that means supporting community empowerment in the countries where our coffee comes from. 
+    
+    We donate 10% of every purchase toward local-led healthcare programs in underdeveloped communities in the Dominican Republic. By purchasing this bag, you’re providing affordable, Dominican-led health and dental care to women, men, and children who would not otherwise receive care.
   </div>
 </template>
 

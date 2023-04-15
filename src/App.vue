@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link v-if="!isAuthenticatedPromiseResult" to="/register">Register</router-link>
+      <router-link v-if="!isAuthenticatedPromiseResult" to="/register">Home</router-link>
+      <router-link v-if="isAuthenticatedPromiseResult" to="/profile">Profile</router-link>  
       <router-link v-if="isAuthenticatedPromiseResult" to="/card">Punch Card</router-link>
       <router-link v-if="isAuthenticatedPromiseResult" to="/customers">Customers</router-link>
       <router-link v-if="isAuthenticatedPromiseResult" to="/adminpanel">Admin Panel</router-link>
