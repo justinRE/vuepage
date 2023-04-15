@@ -5,16 +5,23 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    userName: ''
+    email: '',
+    name: ''
   },
   mutations: {
-    SET_USER_NAME(state, name) {
-      state.userName = name
+    SET_EMAIL(state, email) {
+      state.email = email
+    },
+    SET_NAME(state, name) {
+      state.name = name
     }
   },
   actions: {
-    setUserName({ commit }, name) {
-      commit('SET_USER_NAME', name)
+    setEmail({ commit }, email) {
+      commit('SET_EMAIL', email)
+    },
+    setName({ commit }, name) {
+      commit('SET_NAME', name)
     }
   }
 })

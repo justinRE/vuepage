@@ -1,11 +1,12 @@
 <template>
     <div>
-        <h2>Profile: Welcome</h2>
+        <h2>Welcome {{ $store.state.name }}</h2>
+        <div>{{ $store.state.email }}</div>
     </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   name: 'Profile',
@@ -19,10 +20,16 @@ export default {
     this.claims = await Object.entries(idToken.claims).map(entry => ({ claim: entry[0], value: entry[1] }))
 
     var name = this.claims.find(claim => claim.claim === 'name').value
-    console.log("name: " + name)
+    console.log("setting name: " + name)
+    this.setName(name)
 
     var email = this.claims.find(claim => claim.claim === 'email').value
-    console.log("email: " + email)
+    console.log("setting email: " + email)
+    this.setEmail(email)
+  },
+  methods: {
+    ...mapActions(['setName']),
+    ...mapActions(['setEmail'])
   }
 }
 </script>
