@@ -59,8 +59,8 @@
 </template>
 
 <script>
+import store from '../store'
 import QrcodeVue from 'qrcode.vue'
-import { mapState } from 'vuex'
 import axios from 'axios';
 
 export default {
@@ -73,7 +73,9 @@ export default {
       punches: 0,
       freeDrinks: 0,
       flipped: false,
-      userEmail: "",
+      email: store.state.email,
+      site: store.state.site,
+      userEmail: ''
     }
   },
   methods: {
@@ -84,8 +86,9 @@ export default {
   async created() {
     try {
       //instead of name I want customer id to make sure it's the right one
-      var cusName = encodeURIComponent(this.userName);
-      const response = await axios.get(`https://collidegateway.azure-api.net/GetCustomerByName/${cusName}`, {
+      var cusEmail = this.email
+      console.log(cusEmail)
+      const response = await axios.get(`https://${store.state.apim}/GetCustomerByEmail/${cusEmail}`, {
         headers: {
           'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
         }
@@ -97,7 +100,6 @@ export default {
     }
   },
   computed: {
-    ...mapState(['userName']),
     initialFreeDrinks() {
       const freeDrinks = Math.floor(this.cardPunches / 10);
       return freeDrinks < 1 ? 0 : freeDrinks;

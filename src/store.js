@@ -7,7 +7,9 @@ export default new Vuex.Store({
   state: {
     email: '',
     name: '',
-    phone: ''
+    phone: '',
+    apim: 'collidegateway.azure-api.net',
+    site: 'localhost'
   },
   mutations: {
     SET_EMAIL(state, email) {
@@ -21,6 +23,9 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    getEmail(){
+      return this.email;
+    },
     setEmail({ commit }, email) {
       commit('SET_EMAIL', email)
     },
