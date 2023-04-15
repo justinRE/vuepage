@@ -79,7 +79,9 @@ const routes = [
   {
     path: '/profile',
     name: 'Profile',
-    component: ProfileComponent,
+    component: function () {
+      return import(/* webpackChunkName: "RewardScan" */ '../views/Profile.vue')
+    },
     meta: {
       requiresAuth: true
     }
