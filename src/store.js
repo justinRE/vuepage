@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     email: '',
-    name: ''
+    name: '',
+    phone: ''
   },
   mutations: {
     SET_EMAIL(state, email) {
@@ -14,6 +15,9 @@ export default new Vuex.Store({
     },
     SET_NAME(state, name) {
       state.name = name
+    },
+    SET_PHONE(state, phone) {
+      state.phone = phone
     }
   },
   actions: {
@@ -22,6 +26,9 @@ export default new Vuex.Store({
     },
     setName({ commit }, name) {
       commit('SET_NAME', name)
+    },
+    setPhone({ commit }, phone) {
+      commit('SET_PHONE', phone)
     }
   }
 })
