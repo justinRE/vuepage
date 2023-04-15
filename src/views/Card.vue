@@ -134,7 +134,7 @@ export default {
 }
 
 .punched {
-  opacity: 0.2;
+  filter:brightness(30%)
 }
 
 .cup {
