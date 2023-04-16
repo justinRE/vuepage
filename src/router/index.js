@@ -18,10 +18,10 @@ Vue.use(Auth, { oktaAuth })
 
 const routes = [
   {
-    path: '/register',
-    name: 'Register',
+    path: '/home',
+    name: 'Home',
     component: function () {
-      return import(/* webpackChunkName: "register" */ '../views/Register.vue')
+      return import(/* webpackChunkName: "home" */ '../views/Home.vue')
     },
     meta: {
       requiresAuth: false
@@ -94,7 +94,7 @@ const routes = [
     // Add catch-all route to redirect virtual routes to index.html
     {
       path: '*',
-      redirect: { name: 'Register' } // Change the name of the default route
+      redirect: { name: 'Home' } // Change the name of the default route
     }
 ]
 

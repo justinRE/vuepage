@@ -9,12 +9,13 @@ export default new Vuex.Store({
     storage: window.sessionStorage,
       })],
     state: {
-    email: '',
-    name: '',
-    phone: '',
-    apim: 'collidegateway.azure-api.net',
-    site: 'localhost'
-  },
+      email: '',
+      name: '',
+      phone: '',
+      apim: 'collidegateway.azure-api.net',
+      token: '',
+      role: 'customer'
+    },
   mutations: {
     SET_EMAIL(state, email) {
       state.email = email
@@ -24,13 +25,28 @@ export default new Vuex.Store({
     },
     SET_PHONE(state, phone) {
       state.phone = phone
+    },
+    SET_TOKEN(state, token) {
+      state.token = token
+    },
+    SET_ROLE(state, role) {
+      state.role = role
     }
+
   },
   actions: {
     getEmail(){
       return this.email;
     },
     setEmail({ commit }, email) {
+      if (email === 'herryone1@gmail.com'){
+        console.log("overriding role to admin for " + email)
+        commit('SET_ROLE', 'admin')
+      }
+      else{
+        console.log("setting role to customer for " + email)
+        commit('SET_ROLE', 'customer')
+      }
       commit('SET_EMAIL', email)
     },
     setName({ commit }, name) {
@@ -38,6 +54,9 @@ export default new Vuex.Store({
     },
     setPhone({ commit }, phone) {
       commit('SET_PHONE', phone)
+    },
+    setToken({ commit }, token) {
+      commit('SET_TOKEN', token)
     }
   }
 })

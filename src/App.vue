@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link v-if="!isAuthenticatedPromiseResult" to="/register">Home</router-link>
+      <router-link v-if="!isAuthenticatedPromiseResult" to="/home">Home</router-link>
       <router-link v-if="isAuthenticatedPromiseResult" to="/profile">Profile</router-link>  
-      <router-link v-if="isAuthenticatedPromiseResult" to="/card">Punch Card</router-link>
-      <router-link v-if="isAuthenticatedPromiseResult" to="/customers">Customers</router-link>
-      <router-link v-if="isAuthenticatedPromiseResult" to="/adminpanel">Admin Panel</router-link>
+      <router-link v-if="isAuthenticatedPromiseResult && $store.state.role==='customer'" to="/card">Punch Card</router-link>
+      <router-link v-if="isAuthenticatedPromiseResult && $store.state.role==='admin'" to="/customers">Customers</router-link>
+      <router-link v-if="isAuthenticatedPromiseResult && $store.state.role==='admin'" to="/adminpanel">Admin Panel</router-link>
       <button v-if="isAuthenticated" @click="logout" class="btn-logout">Logout</button>
       <button v-else @click="login" class="btn-login">Login</button>
     </div>
@@ -14,11 +14,14 @@
 </template>
 
 <script>
+import store from './store'
+
 export default {
   name: 'App',
   data() {
     return {
       isAuthenticated: null,
+      role: 'admin'
     };
   },
   computed: {
@@ -42,13 +45,14 @@ export default {
       await this.$auth.signOut()
       console.log("Logged out.")
       this.isAuthenticated = false;
-      router.push('/register');
+      router.push('/home');
     }
   },
   created() {
     this.$auth.isAuthenticated().then((result) => {
       this.isAuthenticated = result;
       console.log("isAuthenticated:", result);
+      console.log("role:", role);
     });
   }
 }

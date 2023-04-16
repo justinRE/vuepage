@@ -3,17 +3,21 @@
         <h2>Welcome {{ $store.state.name }}</h2>
         <div>{{ $store.state.email }}</div>
         <div>{{ $store.state.phone }}</div>
+        <div>{{ $store.state.role }}</div>
+        <button @click="GetUserInfo"> {{ UserInfo }}</button>
     </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import axios from 'axios';
 
 export default {
   name: 'Profile',
   data () {
     return {
-      claims: []
+      claims: [],
+      UserInfo: []
     }
   },
   async created () {
@@ -31,11 +35,27 @@ export default {
     var phone = "502-802-6596"
     console.log("setting phone [mocked]: " + phone)
     this.setPhone(phone)
+
+    var token = this.claims.find(claim => claim.claim === 'nonce').value
+    console.log("Setting token: " + token)
+    this.setToken(token)
   },
   methods: {
     ...mapActions(['setName']),
     ...mapActions(['setEmail']),
-    ...mapActions(['setPhone'])
+    ...mapActions(['setPhone']),
+    ...mapActions(['setToken']),
+    GetUserInfo(){
+      const GetUserInfo = axios.get(`https://dev-71617988.okta.com/oauth2/v1/userinfo`, {
+        headers: {
+          'Authorization': `Bearer ${this.token}`
+          //TODO: I think I'm grabbing the wrong token
+        } 
+  //     curl -i -X GET \
+  // https://subdomain.okta.com/oauth2/v1/userinfo \
+  // -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
+    })
+}
   }
 }
 </script>
