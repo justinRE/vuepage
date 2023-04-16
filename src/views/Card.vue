@@ -10,12 +10,11 @@
               <div class="card-up">
                 <div class="punch-row">
           <img class="left-cap img-fluid" :src="require('@/assets/leftend.png')" />
-          <img
-            v-for="(punch, index) in 5"
-            :key="index"
-            :src="require('@/assets/BeanCard.png')"
-            :class="{ punched: index < punches }"
-          />
+          <div v-for="(index) in 5"  :key="index" >
+            <img v-if="punches>=index" :src="require('@/assets/bean-punch-white.png')" />
+            <img v-else :src="require('@/assets/BeanCard.png')" />
+          </div>
+         
           <img class="right-cap img-fluid" :src="require('@/assets/rightEnd.png')" />
         </div>
 
@@ -93,7 +92,7 @@ export default {
         }
       })  
       this.punches = response.data.punchNumber;
-      //console.log("Response: " + JSON.stringify(response))
+      console.log("Response: " + JSON.stringify(response))
       this.userEmail = this.email;
     } catch (error) {
       console.error(error)
