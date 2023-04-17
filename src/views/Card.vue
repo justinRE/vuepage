@@ -20,31 +20,30 @@
 
         <div class="punch-row">
           <img class="left-cap img-fluid" :src="require('@/assets/leftend.png')" />
-          <img
-            v-for="(punch, index) in 4"
-            :key="index + 4"
-            :src="require('@/assets/BeanCard.png')"
-            :class="{ punched: index + 5 < punches }" />
+          <div v-for="(index) in 4" :key="index + 4">
+            <img v-if="punches>=index+5" :src="require('@/assets/bean-punch-white.png')">
+            <img v-else :src="require('@/assets/BeanCard.png')" />
+          </div>
 
-          <img
-            class="cup img-fluid"
-            :src="require('@/assets/CupCard.png')"
-            :class="{ punched: punches >= 10 }" />
+          <div v-for="(index) in 1" :key="index">
+            <!-- Ten is never reached with current GetPunches logic-->
+          <img v-if="punches>=index+10" :src="require('@/assets/reward.png')">
+          <img v-else :src="require('@/assets/CupCard.png')">
+          </div>
+          
           <img class="right-cap img-fluid" :src="require('@/assets/rightEnd.png')" />
-        </div>
-
+          </div>
           </div>
 
           <!-- Content -->
           <div class="card-body">
-            <h4 class="font-weight-bold mb-3">Number of Free Drinks: {{ freeDrinks }}</h4>
-            <!-- button -->
-            <div class="hint" v-if="!flipped">Click anywhere to flip</div> <!-- Add this line for hint -->
+            <!-- this doesn't include the drinks that have been claimed-->
+            <h4 class="font-weight-bold mb-3">Number of Free Drinks: {{ userRewards }}</h4>
+            <div class="hint" v-if="!flipped">Click anywhere to flip</div>
           </div>
           </div>
           <div class="face back">
           <div class="card-body">
-
             <!-- Content -->
             <p>
               <qrcode-vue :value="userEmail" :size="300" level="H" />
@@ -74,13 +73,9 @@ export default {
       flipped: false,
       email: store.state.email,
       site: store.state.site,
-      userEmail: ''
+      userEmail: '',
+      userRewards: 0
     }
-  },
-  methods: {
-    addPunch() {
-      this.punches++;
-    },
   },
   async created() {
     try {
@@ -92,6 +87,7 @@ export default {
         }
       })  
       this.punches = response.data.punchNumber;
+      this.userRewards = response.data.rewardTotal;
       console.log("Response: " + JSON.stringify(response))
       this.userEmail = this.email;
     } catch (error) {
@@ -130,10 +126,6 @@ export default {
   margin-top: -1px;
   margin-left: -1px;
   margin-right: -1px;
-}
-
-.punched {
-  filter:brightness(30%)
 }
 
 .cup {
