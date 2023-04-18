@@ -5,7 +5,7 @@
       <router-link v-if="isAuthenticatedPromiseResult" to="/profile">Profile</router-link>  
       <router-link v-if="isAuthenticatedPromiseResult && $store.state.role==='customer'" to="/card">Punch Card</router-link>
       <router-link v-if="isAuthenticatedPromiseResult && $store.state.role==='admin'" to="/customers">Customers</router-link>
-      <router-link v-if="isAuthenticatedPromiseResult && $store.state.role==='admin'" to="/adminpanel">Admin Panel</router-link>
+      <router-link v-if="isAuthenticatedPromiseResult && $store.state.role==='admin'" to="/adminpanel">Admin Panel</router-link> |
       <button v-if="isAuthenticated" @click="logout" class="btn-logout">Logout</button>
       <button v-else @click="login" class="btn-login">Login</button>
     </div>

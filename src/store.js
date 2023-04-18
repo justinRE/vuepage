@@ -12,7 +12,7 @@ export default new Vuex.Store({
       email: '',
       name: '',
       phone: '',
-      apim: 'collidegateway.azure-api.net',
+      apim: 'https://loyaltyapims.azure-api.net',
       token: '',
       role: 'customer'
     },

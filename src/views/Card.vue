@@ -81,7 +81,7 @@ export default {
     try {
       var cusEmail = encodeURIComponent(this.email)
       console.log(cusEmail)
-      const response = await axios.get(`https://${store.state.apim}/GetCustomerPunches/${cusEmail}`, {
+      const response = await axios.get(`${store.state.apim}/GetCustomerPunches/${cusEmail}`, {
         headers: {
           'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
         }

@@ -48,7 +48,7 @@ export default {
   },
   methods: {
     Customers() {
-      axios.get("https://collidegateway.azure-api.net/GetCustomer", {
+      axios.get("https://loyaltyapims.azure-api.net/GetCustomer", {
         headers: {
           'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
         }

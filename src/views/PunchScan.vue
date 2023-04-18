@@ -53,7 +53,7 @@ export default {
             //instead of name I want customer id to make sure it's the right one
             var cusEmail = encodeURIComponent(this.userName);
             console.log(cusName)
-            axios.post(`https://collidegateway.azure-api.net/PunchCustomer/${cusName}`, { punchData: decodedString })
+            axios.post(`https://loyaltyapims.azure-api.net/PunchCustomer/${cusName}`, { punchData: decodedString })
                 .then(response => {
                 this.error = 'Scanned successfully';
                 })
