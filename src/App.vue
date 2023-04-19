@@ -6,8 +6,8 @@
       <router-link v-if="isAuthenticatedPromiseResult && $store.state.role==='customer'" to="/card">Punch Card</router-link>
       <router-link v-if="isAuthenticatedPromiseResult && $store.state.role==='admin'" to="/customers">Customers</router-link>
       <router-link v-if="isAuthenticatedPromiseResult && $store.state.role==='admin'" to="/adminpanel">Admin Panel</router-link> |
-      <button v-if="isAuthenticated" @click="logout" class="btn-logout">Logout</button>
-      <button v-else @click="login" class="btn-login">Login</button>
+      <a v-if="isAuthenticated" class="btn-logout" :href="$store.state.website + '/.auth/logout?post_logout_redirect_uri=/'">Logout</a>
+      <a v-else class="btn-login" :href="$store.state.website + '/.auth/login/aad?post_login_redirect_uri=/'">Login</a>
     </div>
     <router-view @authenticated="setAuthenticated"/>
   </div>
@@ -32,20 +32,6 @@ export default {
   methods: {
     setAuthenticated(status) {
       this.isAuthenticated = status;
-    },
-    async login() {
-      await this.$auth.signInWithRedirect({ originalUri: '/profile' }).finally(
-        {
-          // if succesfully logged in, then post to to your azure function store user api
-        }
-      )
-    },
-    async logout() {
-      console.log("Logging out...")
-      await this.$auth.signOut()
-      console.log("Logged out.")
-      this.isAuthenticated = false;
-      router.push('/home');
     }
   },
   created() {

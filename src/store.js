@@ -14,7 +14,8 @@ export default new Vuex.Store({
       phone: '',
       apim: 'https://loyaltyapim2.azure-api.net',
       token: '',
-      role: 'customer'
+      role: 'customer',
+      website: 'https://lively-glacier-0d2b2fa10.3.azurestaticapps.net/'
     },
   mutations: {
     SET_EMAIL(state, email) {
