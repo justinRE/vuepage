@@ -11,6 +11,7 @@
 <script>
 import {QrcodeStream} from 'vue-qrcode-reader'
 import { mapState } from 'vuex'
+import store from '../store'
 
 
 export default {
@@ -53,7 +54,7 @@ export default {
             //instead of name I want customer id to make sure it's the right one
             var cusEmail = encodeURIComponent(this.userName);
             console.log(cusName)
-            axios.post(`https://loyaltyapims.azure-api.net/PunchCustomer/${cusName}`, { punchData: decodedString })
+            axios.post(`${store.state.apim}/PunchCustomer/${cusName}`, { punchData: decodedString })
                 .then(response => {
                 this.error = 'Scanned successfully';
                 })

@@ -37,6 +37,7 @@
 
 <script>
 import axios from 'axios';
+import store from '../store'
 
 export default {
   name: 'Customers', 
@@ -48,7 +49,7 @@ export default {
   },
   methods: {
     Customers() {
-      axios.get("https://loyaltyapims.azure-api.net/GetCustomer", {
+      axios.get(`${store.state.apim}/GetCustomer`, {
         headers: {
           'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
         }

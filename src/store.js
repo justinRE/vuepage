@@ -12,7 +12,7 @@ export default new Vuex.Store({
       email: '',
       name: '',
       phone: '',
-      apim: 'https://loyaltyapims.azure-api.net',
+      apim: 'https://loyaltyapim2.azure-api.net',
       token: '',
       role: 'customer'
     },
