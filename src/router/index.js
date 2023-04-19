@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-/*By default, Webpack generates chunk names based on the file name and a  hash 
+/*By default, Webpack generates chunk names based on the file name and a    hash 
 By adding a Webpack chunk name comment, there is a more descriptive name for the chunk, makes it easier to debug.*/
 const routes = [
   {
