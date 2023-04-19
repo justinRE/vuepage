@@ -76,10 +76,6 @@ const routes = [
       requiresAuth: true
     }
   },
-  {
-    path: '/login/callback',
-    component: LoginCallback
-  },
     // Add catch-all route to redirect virtual routes to index.html
     {
       path: '*',
