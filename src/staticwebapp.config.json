@@ -1,14 +1,4 @@
 {
-    "routes": [
-      {
-        "route": "/profile*",
-        "allowedRoles": ["authenticated"]
-      },
-      {
-        "route": "/additional*",
-        "allowedRoles": ["admin"]
-      }
-    ],
     "responseOverrides": {
       "401": {
         "statusCode": 302,
