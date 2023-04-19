@@ -11,9 +11,6 @@ const routes = [
     name: 'Home',
     component: function () {
       return import(/* webpackChunkName: "home" */ '../views/Home.vue')
-    },
-    meta: {
-      requiresAuth: false
     }
   },
   {
@@ -21,9 +18,6 @@ const routes = [
     name: 'Card',
     component: function () {
       return import(/* webpackChunkName: "card" */ '../views/Card.vue')
-    },
-    meta: {
-      requiresAuth: true
     }
   },
   {
@@ -31,9 +25,6 @@ const routes = [
     name: 'Customers',
     component: function () {
       return import(/* webpackChunkName: "customers" */ '../views/Customers.vue')
-    },
-    meta: {
-      requiresAuth: true
     }
   },
   {
@@ -41,9 +32,6 @@ const routes = [
     name: 'Panel',
     component: function () {
       return import(/* webpackChunkName: "panel" */ '../views/Panel.vue')
-    },
-    meta: {
-      requiresAuth: true
     }
   },
   {
@@ -51,9 +39,6 @@ const routes = [
     name: 'PunchScan',
     component: function () {
       return import(/* webpackChunkName: "PunchScan" */ '../views/PunchScan.vue')
-    },
-    meta: {
-      requiresAuth: true
     }
   },
   {
@@ -61,9 +46,6 @@ const routes = [
     name: 'RewardScan',
     component: function () {
       return import(/* webpackChunkName: "RewardScan" */ '../views/RewardScan.vue')
-    },
-    meta: {
-      requiresAuth: true
     }
   },
   {
@@ -71,12 +53,9 @@ const routes = [
     name: 'Profile',
     component: function () {
       return import(/* webpackChunkName: "RewardScan" */ '../views/Profile.vue')
-    },
-    meta: {
-      requiresAuth: true
     }
   },
-    // Add catch-all route to redirect virtual routes to index.html
+    // Add catch-all route to redirect virtual routes to Home
     {
       path: '*',
       redirect: { name: 'Home' } // Change the name of the default route

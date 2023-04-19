@@ -1,15 +1,16 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link v-if="!isAuthenticatedPromiseResult" to="/home">Home</router-link>
-      <router-link v-if="isAuthenticatedPromiseResult" to="/profile">Profile</router-link>  
-      <router-link v-if="isAuthenticatedPromiseResult && $store.state.role==='customer'" to="/card">Punch Card</router-link>
-      <router-link v-if="isAuthenticatedPromiseResult && $store.state.role==='admin'" to="/customers">Customers</router-link>
-      <router-link v-if="isAuthenticatedPromiseResult && $store.state.role==='admin'" to="/adminpanel">Admin Panel</router-link> |
-      <a v-if="isAuthenticated" class="btn-logout" :href="$store.state.website + '/.auth/logout?post_logout_redirect_uri=/'">Logout</a>
-      <a v-else class="btn-login" :href="$store.state.website + '/.auth/login/aad?post_login_redirect_uri=/'">Login</a>
+      <router-link to="/home">Home</router-link>
+      <router-link to="/profile">Profile</router-link>  
+      <router-link to="/card">Punch Card</router-link>
+      <router-link to="/customers">Customers</router-link>
+      <router-link to="/adminpanel">Admin Panel</router-link> |
+      <a class="btn-logout" :href="$store.state.website + '/.auth/logout?post_logout_redirect_uri=/'">Logout</a>
+      <a class="btn-login" :href="$store.state.website + '/.auth/login/aad?post_login_redirect_uri=/'">Login</a>
+      <!-- v-if="isAuthenticatedPromiseResult && $store.state.role==='admin'" -->
     </div>
-    <router-view @authenticated="setAuthenticated"/>
+  <!--<router-view @authenticated="setAuthenticated"/> -->  
   </div>
 </template>
 
@@ -20,27 +21,9 @@ export default {
   name: 'App',
   data() {
     return {
-      isAuthenticated: null,
       role: 'admin'
     };
   },
-  computed: {
-    isAuthenticatedPromiseResult() {
-      return this.isAuthenticated === true;
-    },
-  },
-  methods: {
-    setAuthenticated(status) {
-      this.isAuthenticated = status;
-    }
-  },
-  created() {
-    this.$auth.isAuthenticated().then((result) => {
-      this.isAuthenticated = result;
-      console.log("isAuthenticated:", result);
-      console.log("role:", role);
-    });
-  }
 }
 </script>
 
