@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Auth from '@okta/okta-vue'
 import { LoginCallback, navigationGuard } from '@okta/okta-vue'
-import ProfileComponent from '@/components/Profile'
 import { OktaAuth } from '@okta/okta-auth-js'
 
 Vue.use(VueRouter)
