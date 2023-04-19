@@ -89,6 +89,4 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach(navigationGuard)
-
 export default router
