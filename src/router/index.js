@@ -1,20 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Auth from '@okta/okta-vue'
-import { LoginCallback, navigationGuard } from '@okta/okta-vue'
-import ProfileComponent from '@/components/Profile'
-import { OktaAuth } from '@okta/okta-auth-js'
 
 Vue.use(VueRouter)
-
-const oktaAuth= new OktaAuth({
-  clientId: '0oa8xojnpxKG707955d7',
-  issuer: 'https://dev-71617988.okta.com/oauth2/default',
-  redirectUri: window.location.origin + '/login/callback',
-  scopes: ['openid', 'profile', 'email', 'phone']
-})
-
-Vue.use(Auth, { oktaAuth })
 
 const routes = [
   {

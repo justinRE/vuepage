@@ -46,18 +46,9 @@ export default {
     ...mapActions(['setPhone']),
     ...mapActions(['setToken']),
     GetUserInfo(){
-      const GetUserInfo = axios.get(`https://dev-71617988.okta.com/oauth2/v1/userinfo`, {
-        headers: {
-          'Authorization': `Bearer ${this.token}`
-          //TODO: I think I'm grabbing the wrong token
-        } 
-  //     curl -i -X GET \
-  // https://subdomain.okta.com/oauth2/v1/userinfo \
-  // -H 'Authorization: Bearer <YOUR_TOKEN_HERE>'
-    })
+    }
 }
   }
-}
 </script>
 
 <style>
