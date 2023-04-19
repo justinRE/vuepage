@@ -8,7 +8,7 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: function () {
-      return import(/* webpackChunkName: "home" */ '../views/Home.vue')
+      return import( '../views/Home.vue')
     },
     meta: {
       requiresAuth: false
