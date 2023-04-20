@@ -83,7 +83,7 @@ export default {
       console.log(cusEmail)
       const response = await axios.get(`${store.state.apim}/GetCustomerPunches/${cusEmail}`, {
         headers: {
-          'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+          'Ocp-Apim-Subscription-Key': process.env.VUEAPPKEY
         }
       })  
       this.punches = response.data.punchNumber;
