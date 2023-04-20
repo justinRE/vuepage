@@ -10,6 +10,7 @@
       <a class="btn-login" :href="$store.state.website + '/.auth/login/aad?post_login_redirect_uri=/'">Login</a>
       <!-- v-if="isAuthenticatedPromiseResult && $store.state.role==='admin'" -->
     </div>
+    <router-view/>
   <!--<router-view @authenticated="setAuthenticated"/> -->  
   </div>
 </template>
