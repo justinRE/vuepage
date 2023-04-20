@@ -45,7 +45,7 @@ export default {
     Customers() {
       axios.get(`${store.state.apim}/GetCustomer`, {
         headers: {
-          'Ocp-Apim-Subscription-Key': process.env.VUEAPPKEY
+          'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
         }
       }
 ).then(response => {
@@ -65,7 +65,7 @@ export default {
 
           axios.delete(`https://collidegateway.azure-api.net/DeleteCustomer/${customerId}`, {
             headers: {
-              'Ocp-Apim-Subscription-Key': process.env.VUEAPPKEY
+              'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
             }
           }).then(() => {
             // remove the customer data from the table
@@ -98,7 +98,7 @@ punchCustomer(index) {
       punches: customerPunches
     }, {
       headers: {
-        'Ocp-Apim-Subscription-Key': process.env.VUEAPPKEY
+        'Ocp-Apim-Subscription-Key':process.env.VUE_APP_KEY
       }
     }).then(response => {
       console.log('Customer punches updated successfully', response.data);
