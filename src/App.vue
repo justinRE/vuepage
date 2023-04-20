@@ -5,7 +5,7 @@
       <router-link to="/profile">Profile</router-link>  
       <router-link to="/card">Punch Card</router-link>
       <router-link to="/customers">Customers</router-link>
-      <router-link to="/adminpanel">Admin Panel</router-link> |
+      <router-link to="/adminpanel">Admin Panel</router-link>
       <a class="btn-logout" :href="$store.state.website + '/.auth/logout?post_logout_redirect_uri=/'">Logout</a>
       <a class="btn-login" :href="$store.state.website + '/.auth/login/aad?post_login_redirect_uri=/'">Login</a>
       <!-- v-if="isAuthenticatedPromiseResult && $store.state.role==='admin'" -->

@@ -7,6 +7,21 @@
       {
         "route": "/adminpanel*",
         "allowedRoles": ["admin"]
+      },
+      {
+        "route": "/home*"
+      },
+      {
+        "route": "/customers*"
+      },
+      {
+        "route": "/scanpunches*"
+      },
+      {
+        "route": "/scanrewards*"
+      },
+      {
+        "route": "/profile*"
       }
     ],
     "responseOverrides": {
