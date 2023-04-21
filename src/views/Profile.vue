@@ -4,7 +4,8 @@
       <div>{{ $store.state.email }}</div>
       <div>{{ $store.state.phone }}</div>
       <div>{{ $store.state.role }}</div>
-      <div>{{ info }}</div>
+      <div> {{ info }}</div>
+
   </div>
 </template>
 
@@ -17,12 +18,13 @@ name: 'Profile',
 data () {
   return {
     claims: [],
-    info: null
-  }
+    info
+    }
 },
 async created () {
   try {
     const response = await axios.get('/.auth/me')
+    .then(response => (this.info = response))
     const clientPrincipal = response.data.clientPrincipal
     const userDetails = clientPrincipal.userDetails
 
@@ -41,10 +43,6 @@ async created () {
     var roles = clientPrincipal.userRoles
     console.log("setting role: " + roles)
     this.setRole(roles)
-
-    var token = clientPrincipal.identityProvider + " " + clientPrincipal.userId
-    console.log("Setting token: " + token)
-    this.setToken(token)
   } catch (error) {
     console.error(error)
   }
@@ -54,7 +52,6 @@ methods: {
   ...mapActions(['setEmail']),
   ...mapActions(['setPhone']),
   ...mapActions(['setRole']),
-  ...mapActions(['setToken']),
   GetUserInfo(){
   }
 }
