@@ -14,7 +14,7 @@ export default new Vuex.Store({
       phone: '',
       apim: 'https://loyaltyapim2.azure-api.net',
       token: '',
-      role: 'customer',
+      role: '',
       website: 'https://victorious-field-0b04a0c10.3.azurestaticapps.net'
     },
   mutations: {
@@ -40,14 +40,6 @@ export default new Vuex.Store({
       return this.email;
     },
     setEmail({ commit }, email) {
-      if (email === 'herryone1@gmail.com'){
-        console.log("overriding role to admin for " + email)
-        commit('SET_ROLE', 'admin')
-      }
-      else{
-        console.log("setting role to customer for " + email)
-        commit('SET_ROLE', 'customer')
-      }
       commit('SET_EMAIL', email)
     },
     setName({ commit }, name) {
