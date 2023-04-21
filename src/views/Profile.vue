@@ -20,35 +20,41 @@ data () {
     info: null
   }
 },
-mounted(){
-  axios
-    .get('/.auth/me')
-    .then(response => (this.info = response))
-},
 async created () {
-  const userDetails = this.info.data.clientPrincipal.userDetails;
+  try {
+    const response = await axios.get('/.auth/me')
+    const clientPrincipal = response.data.clientPrincipal
+    const userDetails = clientPrincipal.userDetails
 
-  var name = userDetails.split('@')[0];
-  console.log("setting name: " + name)
-  this.setName(name)
+    var name = userDetails
+    console.log("setting name: " + name)
+    this.setName(name)
 
-  var email = userDetails;
-  console.log("setting email: " + email)
-  this.setEmail(email)
+    var email = userDetails
+    console.log("setting email: " + email)
+    this.setEmail(email)
 
-  var phone = "502-802-6596"
-  console.log("setting phone [mocked]: " + phone)
-  this.setPhone(phone)
+    var phone = "502-802-6596"
+    console.log("setting phone [mocked]: " + phone)
+    this.setPhone(phone)
 
-  var roles = this.info.data.clientPrincipal.userRoles;
-  console.log("Setting roles: " + roles);
-  this.setRole(roles);
+    var roles = clientPrincipal.userRoles
+    console.log("setting role: " + roles)
+    this.setRole(roles)
+
+    var token = clientPrincipal.identityProvider + " " + clientPrincipal.userId
+    console.log("Setting token: " + token)
+    this.setToken(token)
+  } catch (error) {
+    console.error(error)
+  }
 },
 methods: {
   ...mapActions(['setName']),
   ...mapActions(['setEmail']),
   ...mapActions(['setPhone']),
   ...mapActions(['setRole']),
+  ...mapActions(['setToken']),
   GetUserInfo(){
   }
 }
