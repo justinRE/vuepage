@@ -4,7 +4,6 @@
         <div>{{ $store.state.email }}</div>
         <div>{{ $store.state.phone }}</div>
         <div>{{ $store.state.role }}</div>
-        <button @click="GetUserInfo"> {{ UserInfo }}</button>
     </div>
 </template>
 
@@ -16,8 +15,7 @@ export default {
   name: 'Profile',
   data () {
     return {
-      claims: [],
-      UserInfo: []
+      claims: []
     }
   },
   async created () {
