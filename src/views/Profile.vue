@@ -4,6 +4,7 @@
         <div>{{ $store.state.email }}</div>
         <div>{{ $store.state.phone }}</div>
         <div>{{ $store.state.role }}</div>
+        <div>{{ info }}</div>
     </div>
 </template>
 
@@ -15,8 +16,14 @@ export default {
   name: 'Profile',
   data () {
     return {
-      claims: []
+      claims: [],
+      info: null
     }
+  },
+  mounted(){
+    axios
+      .get('/.auth/me')
+      .then(response => (this.info = response))
   },
   async created () {
     const idToken = await this.$auth.tokenManager.get('idToken')
