@@ -14,7 +14,7 @@ export default new Vuex.Store({
       phone: '',
       apim: 'https://loyaltyapim2.azure-api.net',
       token: '',
-      role: [],
+      role: '',
       website: 'https://victorious-field-0b04a0c10.3.azurestaticapps.net'
     },
   mutations: {
