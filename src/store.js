@@ -52,7 +52,7 @@ export default new Vuex.Store({
       commit('SET_TOKEN', token)
     },
     setRole({commit}, role){
-      commit('SET ROLE', role)
+      commit('SET_ROLE', role)
     }
   }
 })
