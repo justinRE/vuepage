@@ -1,0 +1,17 @@
+html{
+    font-size:100%
+}
+ body{
+    font-family:'Roboto',sans-serif;
+    background-image: url("/img/coffee-cup-1.png");
+    background-position: 40px 40px; 
+    background-repeat: no-repeat;
+    background-size: 200px 200px;
+    font-size:16px;
+    font-weight:300;
+    color:#313131;
+    line-height:28px;
+    text-align:center;
+    overflow-x:hidden!important;
+    margin:auto!important
+}

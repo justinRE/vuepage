@@ -6,6 +6,7 @@
       <router-link v-if="$store.state.role.includes('anonymous') && !$store.state.role.includes('admin')" to="/card">Punch Card</router-link>
       <router-link v-if="$store.state.role.includes('admin')" to="/customers">Customers</router-link>
       <router-link v-if="$store.state.role.includes('admin')" to="/adminpanel">Admin Panel</router-link>
+      <!--maybe try redirecting logout to home, rn it makes you log back in-->
       <a class="btn-logout" :href="$store.state.website + '/.auth/logout?post_logout_redirect_uri=/'" @click="logout" v-if="loggedIn">Logout</a>
       <a class="btn-login" :href="$store.state.website + '/.auth/login/aad?post_login_redirect_uri=/profile'" v-if="!loggedIn">Login</a>
     </div>
