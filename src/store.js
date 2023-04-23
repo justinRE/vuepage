@@ -50,6 +50,9 @@ export default new Vuex.Store({
     },
     setToken({ commit }, token) {
       commit('SET_TOKEN', token)
+    },
+    setRole({commit}, role){
+      commit('SET ROLE', role)
     }
   }
 })

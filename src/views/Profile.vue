@@ -3,7 +3,7 @@
       <h2>Welcome {{ $store.state.name }}</h2>
       <div>{{ $store.state.email }}</div>
       <div>{{ $store.state.phone }}</div>
-      <div>{{ $store.state.role[0] }}</div>
+      <div>{{ $store.state.role }}</div>
       <div> {{ info }}</div>
 
   </div>
@@ -18,7 +18,7 @@ name: 'Profile',
 data () {
   return {
     claims: [],
-    info
+    info: null
     }
 },
 async created () {
