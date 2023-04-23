@@ -3,13 +3,12 @@ html{
 }
  body{
     font-family:'Roboto',sans-serif;
-    background-image: url("/img/coffee-cup-1.png");
-    background-position: 40px 40px; 
-    background-repeat: no-repeat;
-    background-size: 200px 200px;
+    background: url(/img/coffee-cup-1-20op.png) no-repeat;
+    background-size: 400px 400px;
+    background-position: center;
     font-size:16px;
     font-weight:300;
-    color:#313131;
+color:#421b1b !important;
     line-height:28px;
     text-align:center;
     overflow-x:hidden!important;
