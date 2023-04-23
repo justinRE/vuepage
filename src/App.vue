@@ -2,10 +2,10 @@
   <div id="app">
     <div id="nav">
       <router-link to="/home">Home</router-link>
-      <router-link v-if="$store.state.role.startsWith('anonymous')" to="/profile">Profile</router-link>  
-      <router-link v-if="$store.state.role.startsWith('anonymous')" to="/card">Punch Card</router-link>
-      <router-link v-if="$store.state.role.startsWith('admin')" to="/customers">Customers</router-link>
-      <router-link v-if="$store.state.role.startsWith('admin')" to="/adminpanel">Admin Panel</router-link>
+      <router-link v-if="$store.state.role && $store.state.role.startsWith('anonymous')" to="/profile">Profile</router-link>  
+      <router-link v-if="$store.state.role && $store.state.role.startsWith('anonymous')" to="/card">Punch Card</router-link>
+      <router-link v-if="$store.state.role && $store.state.role.startsWith('admin')" to="/customers">Customers</router-link>
+      <router-link v-if="$store.state.role && $store.state.role.startsWith('admin')" to="/adminpanel">Admin Panel</router-link>
       <a class="btn-logout" :href="$store.state.website + '/.auth/logout?post_logout_redirect_uri=/'">Logout</a>
       <a class="btn-login" :href="$store.state.website + '/.auth/login/aad?post_login_redirect_uri=/profile'">Login</a>
       <!-- v-if="isAuthenticatedPromiseResult && $store.state.role==='admin'" -->
