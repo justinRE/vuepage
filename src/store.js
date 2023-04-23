@@ -13,7 +13,6 @@ export default new Vuex.Store({
       name: '',
       phone: '',
       apim: 'https://loyaltyapim2.azure-api.net',
-      token: '',
       role: '',
       website: 'https://victorious-field-0b04a0c10.3.azurestaticapps.net'
     },
@@ -26,9 +25,6 @@ export default new Vuex.Store({
     },
     SET_PHONE(state, phone) {
       state.phone = phone
-    },
-    SET_TOKEN(state, token) {
-      state.token = token
     },
     SET_ROLE(state, role) {
       state.role = role
@@ -47,9 +43,6 @@ export default new Vuex.Store({
     },
     setPhone({ commit }, phone) {
       commit('SET_PHONE', phone)
-    },
-    setToken({ commit }, token) {
-      commit('SET_TOKEN', token)
     },
     setRole({commit}, role){
       commit('SET_ROLE', role)

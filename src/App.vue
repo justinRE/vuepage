@@ -6,8 +6,8 @@
       <router-link v-if="$store.state.role.includes('anonymous') && !$store.state.role.includes('admin')" to="/card">Punch Card</router-link>
       <router-link v-if="$store.state.role.includes('admin')" to="/customers">Customers</router-link>
       <router-link v-if="$store.state.role.includes('admin')" to="/adminpanel">Admin Panel</router-link>
-      <a class="btn-logout" :href="$store.state.website + '/.auth/logout?post_logout_redirect_uri=/'" @click="logout">Logout</a>
-      <a class="btn-login" :href="$store.state.website + '/.auth/login/aad?post_login_redirect_uri=/profile'">Login</a>
+      <a class="btn-logout" :href="$store.state.website + '/.auth/logout?post_logout_redirect_uri=/'" @click="logout" v-if="loggedIn">Logout</a>
+      <a class="btn-login" :href="$store.state.website + '/.auth/login/aad?post_login_redirect_uri=/profile'" v-if="!loggedIn">Login</a>
     </div>
     <router-view/>
   </div>
@@ -26,15 +26,25 @@ export default {
   },
   methods: {
   logout() {
+      // clear user info from store
+    this.$store.commit('SET_EMAIL', '');
+    this.$store.commit('SET_NAME', '');
+    this.$store.commit('SET_PHONE', '');
+    this.$store.commit('SET_ROLE', '');
+
     // Reset the router links to only show Home and Login
     this.$router.options.routes = [
       { path: '/', component: Home },
       { path: '/login', component: Login }
     ];
     this.$router.push('/');
-  }
+  },
+},
+computed: {
+  loggedIn() {
+    return this.$store.state.email !== '';
+  },
 }
-
 }
 </script>
 
