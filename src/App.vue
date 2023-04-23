@@ -2,18 +2,17 @@
   <div id="app">
     <div id="nav">
       <router-link to="/home">Home</router-link>
-      <router-link v-if="$store.state.role.includes('anonymous')" to="/profile">Profile</router-link>  
-      <router-link v-if="$store.state.role.includes('anonymous')" to="/card">Punch Card</router-link>
+      <router-link v-if="$store.state.role.includes('anonymous') && !$store.state.role.includes('admin')" to="/profile">Profile</router-link>  
+      <router-link v-if="$store.state.role.includes('anonymous') && !$store.state.role.includes('admin')" to="/card">Punch Card</router-link>
       <router-link v-if="$store.state.role.includes('admin')" to="/customers">Customers</router-link>
       <router-link v-if="$store.state.role.includes('admin')" to="/adminpanel">Admin Panel</router-link>
-      <a class="btn-logout" :href="$store.state.website + '/.auth/logout?post_logout_redirect_uri=/'">Logout</a>
+      <a class="btn-logout" :href="$store.state.website + '/.auth/logout?post_logout_redirect_uri=/'" @click="logout">Logout</a>
       <a class="btn-login" :href="$store.state.website + '/.auth/login/aad?post_login_redirect_uri=/profile'">Login</a>
-      <!-- v-if="isAuthenticatedPromiseResult && $store.state.role==='admin'" -->
     </div>
     <router-view/>
-  <!--<router-view @authenticated="setAuthenticated"/> -->  
   </div>
 </template>
+
 
 <script>
 import store from './store'
@@ -25,6 +24,17 @@ export default {
       role: 'admin'
     };
   },
+  methods: {
+  logout() {
+    // Reset the router links to only show Home and Login
+    this.$router.options.routes = [
+      { path: '/', component: Home },
+      { path: '/login', component: Login }
+    ];
+    this.$router.push('/');
+  }
+}
+
 }
 </script>
 
