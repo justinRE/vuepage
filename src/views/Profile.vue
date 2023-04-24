@@ -44,10 +44,6 @@ async created () {
     console.log("setting email: " + email)
     this.setEmail(email)
 
-    var phone = "502-802-6596"
-    console.log("setting phone [mocked]: " + phone)
-    this.setPhone(phone)
-
     var roles = clientPrincipal.userRoles
     console.log("setting role: " + roles)
     this.setRole(roles)
