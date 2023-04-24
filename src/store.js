@@ -10,7 +10,7 @@ export default new Vuex.Store({
       })],
     state: {
       email: '',
-      //phone: '',
+      phone: '',
       apim: 'https://loyaltyapim2.azure-api.net',
       role: '',
       website: 'https://victorious-field-0b04a0c10.3.azurestaticapps.net'
@@ -19,9 +19,9 @@ export default new Vuex.Store({
     SET_EMAIL(state, email) {
       state.email = email
     },
-    // SET_PHONE(state, phone) {
-    //   state.phone = phone
-    // },
+    SET_PHONE(state, phone) {
+      state.phone = phone
+    },
     SET_ROLE(state, role) {
       state.role = role
     }
@@ -34,9 +34,9 @@ export default new Vuex.Store({
     setEmail({ commit }, email) {
       commit('SET_EMAIL', email)
     },
-    // setPhone({ commit }, phone) {
-    //   commit('SET_PHONE', phone)
-    // },
+    setPhone({ commit }, phone) {
+      commit('SET_PHONE', phone)
+    },
     setRole({commit}, role){
       commit('SET_ROLE', role)
     }
