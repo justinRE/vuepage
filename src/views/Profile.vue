@@ -2,9 +2,8 @@
   <div>
       <h2>Welcome {{ $store.state.name }}</h2>
       <div>{{ $store.state.email }}</div>
-      <div>{{ $store.state.phone }}</div>
+<!--  <div>{{ $store.state.phone }}</div>-->
       <div>{{ $store.state.role[0] }}</div>
-      <div> {{ info }}</div>
 
   </div>
 </template>
@@ -17,8 +16,7 @@ export default {
 name: 'Profile',
 data () {
   return {
-    claims: [],
-    info: null
+    claims: []
     }
 },
 async created () {
@@ -36,9 +34,9 @@ async created () {
     console.log("setting email: " + email)
     this.setEmail(email)
 
-    var phone = "502-802-6596"
-    console.log("setting phone [mocked]: " + phone)
-    this.setPhone(phone)
+    //var phone = "502-802-6596"
+    //console.log("setting phone [mocked]: " + phone)
+    //this.setPhone(phone)
 
     var roles = clientPrincipal.userRoles
     console.log("setting role: " + roles)
@@ -50,7 +48,7 @@ async created () {
 methods: {
   ...mapActions(['setName']),
   ...mapActions(['setEmail']),
-  ...mapActions(['setPhone']),
+  //...mapActions(['setPhone']),
   ...mapActions(['setRole']),
   GetUserInfo(){
   }

@@ -12,13 +12,16 @@
         "route": "/home*"
       },
       {
-        "route": "/customers*"
+        "route": "/customers*",
+        "allowedRoles": ["admin"]
       },
       {
-        "route": "/scanpunches*"
+        "route": "/scanpunches*",
+        "allowedRoles": ["admin"]
       },
       {
-        "route": "/scanrewards*"
+        "route": "/scanrewards*",
+        "allowedRoles": ["admin"]
       },
       {
         "route": "/profile*"
