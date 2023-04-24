@@ -4,6 +4,9 @@
 <!--  <div>{{ $store.state.phone }}</div>-->
       <div>{{ $store.state.role[0] }}</div>
 
+      <h3>You are on your way to earning rewards with Collide Coffee!</h3>
+      Click on Punch Card to view your card and rewards.
+
   </div>
 </template>
 

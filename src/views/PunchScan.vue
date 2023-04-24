@@ -20,6 +20,7 @@ export default {
             error: '',
             decodedString: '',
             torch: false,
+            cusEmail: store.state.Email
         }
     },
     components:{
@@ -28,7 +29,6 @@ export default {
     methods:{
         async onInit( promise ){
             try {
-                // This was await promise so it might break it
             const { capabilities } = promise
 
             } catch (error) {
@@ -51,10 +51,7 @@ export default {
         },
         onDecode(decodedString) {
             this.decodedString = decodedString;
-            //instead of name I want customer id to make sure it's the right one
-            var cusEmail = encodeURIComponent(this.userName);
-            console.log(cusName)
-            axios.post(`${store.state.apim}/PunchCustomer/${cusName}`, { punchData: decodedString })
+            axios.post(`${store.state.apim}/PunchCustomer/${cusEmail}`, { punchData: decodedString })
                 .then(response => {
                 this.error = 'Scanned successfully';
                 })
