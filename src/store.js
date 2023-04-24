@@ -10,7 +10,6 @@ export default new Vuex.Store({
       })],
     state: {
       email: '',
-      name: '',
       //phone: '',
       apim: 'https://loyaltyapim2.azure-api.net',
       role: '',
@@ -19,9 +18,6 @@ export default new Vuex.Store({
   mutations: {
     SET_EMAIL(state, email) {
       state.email = email
-    },
-    SET_NAME(state, name) {
-      state.name = name
     },
     // SET_PHONE(state, phone) {
     //   state.phone = phone
@@ -37,9 +33,6 @@ export default new Vuex.Store({
     },
     setEmail({ commit }, email) {
       commit('SET_EMAIL', email)
-    },
-    setName({ commit }, name) {
-      commit('SET_NAME', name)
     },
     // setPhone({ commit }, phone) {
     //   commit('SET_PHONE', phone)

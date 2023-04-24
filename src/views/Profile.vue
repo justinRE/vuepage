@@ -1,7 +1,6 @@
 <template>
   <div>
-      <h2>Welcome {{ $store.state.name }}</h2>
-      <div>{{ $store.state.email }}</div>
+      <h2>Welcome {{ $store.state.email }}</h2>
 <!--  <div>{{ $store.state.phone }}</div>-->
       <div>{{ $store.state.role[0] }}</div>
 
@@ -26,10 +25,6 @@ async created () {
     const clientPrincipal = response.data.clientPrincipal
     const userDetails = clientPrincipal.userDetails
 
-    var name = userDetails
-    console.log("setting name: " + name)
-    this.setName(name)
-
     var email = userDetails
     console.log("setting email: " + email)
     this.setEmail(email)
@@ -46,7 +41,6 @@ async created () {
   }
 },
 methods: {
-  ...mapActions(['setName']),
   ...mapActions(['setEmail']),
   //...mapActions(['setPhone']),
   ...mapActions(['setRole']),
