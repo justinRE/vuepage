@@ -7,6 +7,8 @@
       <h3>You are on your way to earning rewards with Collide Coffee!</h3>
       Click on Punch Card to view your card and rewards.
 
+      {{ info }}
+
   </div>
 </template>
 
@@ -18,7 +20,8 @@ export default {
 name: 'Profile',
 data () {
   return {
-    claims: []
+    claims: [],
+    info: null
     }
 },
 async created () {
@@ -27,22 +30,14 @@ async created () {
     .then(response => (this.info = response))
     const clientPrincipal = response.data.clientPrincipal
     const userDetails = clientPrincipal.userDetails
-    const token = response.data.authenticationToken
-
-    // Make request to Graph API to retrieve phone number
-    const graphResponse = await axios.get('https://graph.microsoft.com/v1.0/me?$select=mobilePhone', {
-      headers: {
-        'Authorization': 'Bearer ' + token
-      }
-    })
-
-    const phone = graphResponse.data.mobilePhone
-    console.log("setting phone: " + phone)
-    this.setPhone(phone)
 
     var email = userDetails
     console.log("setting email: " + email)
     this.setEmail(email)
+
+    var phone = "502-802-6596"
+    console.log("setting phone [mocked]: " + phone)
+    this.setPhone(phone)
 
     var roles = clientPrincipal.userRoles
     console.log("setting role: " + roles)
