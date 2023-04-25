@@ -6,9 +6,7 @@
 
       <h3>You are on your way to earning rewards with Collide Coffee!</h3>
       Click on Punch Card to view your card and rewards.
-
-      {{ info }}
-
+      
   </div>
 </template>
 
