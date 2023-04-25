@@ -85,7 +85,7 @@ methods: {
 
     // Check if customer document includes name and phone
     const customer = response.data.customer;
-    if (!customer.CustomerName || !customer.phone) {
+    if (!customer.CustomerName || !customer.CustomerPhone) {
       console.log("Customer document does not include name and phone");
       this.showRegistrationBox = true;
     }
@@ -109,7 +109,7 @@ methods: {
 
   async registerUser() {
     const cusEmail = this.$store.state.email;
-    customerName = this.firstName + this.lastName;
+    const customerName = this.firstName + ' ' + this.lastName;
       try {
     const postResponse = await axios.post(`${store.state.apim}/PostCustomer`, {
       email: cusEmail,
