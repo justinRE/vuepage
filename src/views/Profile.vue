@@ -73,7 +73,7 @@ methods: {
 
   async checkRegistration() {
   const cusEmail = this.$store.state.email;
-  const response = axios.get(`${store.state.apim}/GetCustomerByEmail/${cusEmail}`, {
+  const response = await axios.get(`${store.state.apim}/GetCustomerByEmail/${cusEmail}`, {
       headers: {
         'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
       }
@@ -85,7 +85,7 @@ methods: {
 
     // Check if customer document includes name and phone
     const customer = response.data.customer;
-    if (!customer.name || !customer.phone) {
+    if (!customer.CustomerName || !customer.phone) {
       console.log("Customer document does not include name and phone");
       this.showRegistrationBox = true;
     }
@@ -125,8 +125,6 @@ methods: {
   } catch (error) {
     console.error(error);
   }
-    // Hide the registration box
-    this.showRegistrationBox = false;
   },
 
 }
