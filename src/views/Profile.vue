@@ -8,9 +8,19 @@
           Click on Punch Card to view your card and rewards.
     </div>
     <div v-if="showRegistrationBox">
-      <input v-model="phoneNumber" placeholder="Phone Number">
-      <input v-model="name" placeholder="Name">
-      <button @click="registerUser">Register</button>
+      <h3>Please complete registration to earn a free reward</h3>
+      <form>
+        <label for="firstName">First Name:</label>
+        <input type="text" id="name" v-model="name">
+        <br>
+        <label for="lastName">Last Name:</label>
+        <input type="text" id="name" v-model="name">
+        <br>
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" v-model="phone">
+        <br>
+        <button type="submit">Complete Registration</button>
+      </form>
     </div>
   </div>
 </template>
@@ -26,7 +36,7 @@ data () {
     claims: [],
     showRegistrationBox: false,
     phoneNumber: '',
-    name: ''
+    name: '',
     }
 },
 async created () {
@@ -57,7 +67,12 @@ methods: {
   ...mapActions(['setRole']),
   GetUserInfo(){},
   checkRegistration() {
-
+    const response = axios.get(`${store.state.apim}/GetCustomerByEmail/${cusEmail}`, {
+        headers: {
+          'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+        }
+      })
+      console.log("Response: " + JSON.stringify(response))
 },
 registerUser() {
 

@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     Customers() {
-      axios.get(`${store.state.apim}/GetCustomer`, {
+      axios.get(`${store.state.apim}/GetAllCustomers`, {
         headers: {
           'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
         }
