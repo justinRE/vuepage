@@ -40,7 +40,6 @@ data () {
     }
 },
 async created () {
-  this.checkRegistration();
   try {
     const response = await axios.get('/.auth/me')
     .then(response => (this.info = response))
@@ -58,6 +57,10 @@ async created () {
     var roles = clientPrincipal.userRoles
     console.log("setting role: " + roles)
     this.setRole(roles)
+
+
+    this.checkRegistration();
+
   } catch (error) {
     console.error(error)
   }
