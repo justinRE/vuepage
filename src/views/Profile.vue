@@ -39,7 +39,7 @@ data () {
     phone: '',
     firstName: '',
     lastName: '',
-    type: '',
+    type: ''
     }
 },
 async created () {
@@ -70,22 +70,21 @@ methods: {
   ...mapActions(['setRole']),
   GetUserInfo(){},
 
-
   async checkRegistration() {
   const cusEmail = this.$store.state.email;
   const response = await axios.get(`${store.state.apim}/GetCustomerByEmail/${cusEmail}`, {
-      headers: {
-        'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
-      }
-    })
+    headers: {
+      'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+    }
+  });
 
-    console.log(response.status);
+  console.log(response.status);
   if (response.status === 200) {
     console.log("Customer already exists in Cosmos DB");
 
     // Check if customer document includes name and phone
     const customer = response.data.customer;
-    if (customer && (!customer.CustomerName || !customer.CustomerPhone)) {{
+    if (customer && (!customer.CustomerName || !customer.CustomerPhone)) {
       console.log("Customer document does not include name and phone");
       this.showRegistrationBox = true;
     }
@@ -104,7 +103,7 @@ methods: {
     this.showRegistrationBox = true;
   }
 },
-},
+
 
 
   async registerUser() {
@@ -125,9 +124,10 @@ methods: {
   } catch (error) {
     console.error(error);
   }
-  },
-
 }
+}
+}
+
 </script>
 
 <style>
