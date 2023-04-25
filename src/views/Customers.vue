@@ -63,7 +63,7 @@ export default {
         if (customerData) {
           const customerId = customerData.id; // Use customer ID directly from customerData array
 
-          axios.delete(`https://collidegateway.azure-api.net/DeleteCustomer/${customerId}`, {
+          axios.delete(`${store.state.apim}/DeleteCustomer/${customerId}`, {
             headers: {
               'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
             }
@@ -94,7 +94,7 @@ punchCustomer(index) {
     const customerId = customerData.id; 
     const customerPunches = customerData.customerPunches; 
 
-    axios.post(`https://collidegateway.azure-api.net/UpdateCustomer/${customerId}`, {
+    axios.post(`${store.state.apim}/UpdateCustomer/${customerId}`, {
       punches: customerPunches
     }, {
       headers: {

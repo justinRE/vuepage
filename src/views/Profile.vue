@@ -1,12 +1,17 @@
 <template>
   <div>
+    <div class="header1">
       <h2>Welcome {{ $store.state.email }}</h2>
-<!--  <div>{{ $store.state.phone }}</div>-->
-      <div>{{ $store.state.role[0] }}</div>
-
+    </div>
+    <div>
       <h3>You are on your way to earning rewards with Collide Coffee!</h3>
-      Click on Punch Card to view your card and rewards.
-      
+          Click on Punch Card to view your card and rewards.
+    </div>
+    <div v-if="showRegistrationBox">
+      <input v-model="phoneNumber" placeholder="Phone Number">
+      <input v-model="name" placeholder="Name">
+      <button @click="registerUser">Register</button>
+    </div>
   </div>
 </template>
 
@@ -19,7 +24,9 @@ name: 'Profile',
 data () {
   return {
     claims: [],
-    info: null
+    showRegistrationBox: false,
+    phoneNumber: '',
+    name: ''
     }
 },
 async created () {
@@ -48,12 +55,20 @@ methods: {
   ...mapActions(['setEmail']),
   ...mapActions(['setPhone']),
   ...mapActions(['setRole']),
-  GetUserInfo(){
-  }
+  GetUserInfo(){},
+  checkRegistration() {
+
+},
+registerUser() {
+
+  this.showRegistrationBox = false;
+}
 }
 }
 </script>
 
 <style>
-
+.header1 {
+  margin-bottom: 50px;
+}
 </style>
