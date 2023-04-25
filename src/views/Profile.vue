@@ -67,16 +67,22 @@ methods: {
   ...mapActions(['setRole']),
   GetUserInfo(){},
   checkRegistration() {
-    const cusEmail = this.$store.state.email;
-    const response = axios.get(`${store.state.apim}/GetCustomerByEmail/${cusEmail}`, {
-        headers: {
-          'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
-        }
-      })
-      console.log("Response: " + JSON.stringify(response))
+  const cusEmail = this.$store.state.email;
+  const response = axios.get(`${store.state.apim}/GetCustomerByEmail/${cusEmail}`, {
+      headers: {
+        'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+      }
+    })
 
-      if (response.data.type === "CUSTOMER") {
+  if (response.data.type === "CUSTOMER") {
     console.log("Customer already exists in Cosmos DB");
+
+    // Check if customer document includes name and phone
+    const customer = response.data.customer;
+    if (!customer.name || !customer.phone) {
+      console.log("Customer document does not include name and phone");
+      this.showRegistrationBox = true;
+    }
   } else {
     // If customer does not exist, add them to Cosmos DB
     const postResponse = axios.post(`${store.state.apim}/PostCustomer`, {
@@ -87,6 +93,9 @@ methods: {
       }
     });
     console.log("Customer added to Cosmos DB");
+
+    // Show registration box if customer is newly created
+    this.showRegistrationBox = true;
   }
 },
 },
