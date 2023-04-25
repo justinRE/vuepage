@@ -11,10 +11,10 @@
       <h3>Please complete registration to earn a free reward</h3>
       <form>
         <label for="firstName">First Name:</label>
-        <input type="text" id="name" v-model="name">
+        <input type="text" id="firstName" v-model="firstName">
         <br>
         <label for="lastName">Last Name:</label>
-        <input type="text" id="name" v-model="name">
+        <input type="text" id="lastName" v-model="lastName">
         <br>
         <label for="phone">Phone:</label>
         <input type="text" id="phone" v-model="phone">
@@ -106,24 +106,24 @@ methods: {
   }
 },
 },
-async registerUser() {
-  const cusEmail = this.$store.state.email;
+  async registerUser() {
+    const cusEmail = this.$store.state.email;
 
-  const postResponse = await axios.post(`${store.state.apim}/PostCustomer`, {
-    email: cusEmail,
-    name: this.name,
-    phone: this.phone
-  }, {
-    headers: {
-      'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
-    }
-  });
+    const postResponse = await axios.post(`${store.state.apim}/PostCustomer`, {
+      email: cusEmail,
+      name: this.name,
+      phone: this.phone
+    }, {
+      headers: {
+        'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+      }
+    });
 
-  console.log("Customer added to Cosmos DB");
+    console.log("Customer added to Cosmos DB");
 
-  // Hide the registration box
-  this.showRegistrationBox = false;
-},
+    // Hide the registration box
+    this.showRegistrationBox = false;
+  },
 
 }
 </script>
