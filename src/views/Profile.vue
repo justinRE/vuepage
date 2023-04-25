@@ -31,13 +31,6 @@ async created () {
     const clientPrincipal = response.data.clientPrincipal
     const userDetails = clientPrincipal.userDetails
 
-    const accessToken = this.$route.headers['x-ms-token-aad-access-token'];
-    const graphResponse = await axios.get('https://graph.microsoft.com/v1.0/me?$select=mobilePhone', {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`
-        }
-      })
-
     var email = userDetails
     console.log("setting email: " + email)
     this.setEmail(email)
