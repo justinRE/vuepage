@@ -38,6 +38,7 @@ data () {
     showRegistrationBox: false,
     phoneNumber: '',
     name: '',
+    type: ''
     }
 },
 async created () {
