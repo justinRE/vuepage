@@ -79,7 +79,7 @@ methods: {
       }
     })
 
-  if (response.data.type === "CUSTOMER") {
+  if (response.data.type === "CUSTOMER" ?? false) {
     console.log("Customer already exists in Cosmos DB");
 
     // Check if customer document includes name and phone
