@@ -85,7 +85,7 @@ methods: {
 
     // Check if customer document includes name and phone
     const customer = response.data.customer;
-    if (!customer.CustomerName || !customer.CustomerPhone) {
+    if (customer && (!customer.CustomerName || !customer.CustomerPhone)) {{
       console.log("Customer document does not include name and phone");
       this.showRegistrationBox = true;
     }
