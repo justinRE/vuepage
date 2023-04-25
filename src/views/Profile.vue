@@ -36,9 +36,10 @@ data () {
   return {
     claims: [],
     showRegistrationBox: false,
-    phoneNumber: '',
-    name: '',
-    type: ''
+    phone: '',
+    firstName: '',
+    lastName: '',
+    type: '',
     }
 },
 async created () {
@@ -51,10 +52,6 @@ async created () {
     var email = userDetails
     console.log("setting email: " + email)
     this.setEmail(email)
-
-    var phone = "502-802-6596"
-    console.log("setting phone [mocked]: " + phone)
-    this.setPhone(phone)
 
     var roles = clientPrincipal.userRoles
     console.log("setting role: " + roles)
@@ -72,6 +69,8 @@ methods: {
   ...mapActions(['setPhone']),
   ...mapActions(['setRole']),
   GetUserInfo(){},
+
+
   async checkRegistration() {
   const cusEmail = this.$store.state.email;
   const response = axios.get(`${store.state.apim}/GetCustomerByEmail/${cusEmail}`, {
@@ -106,21 +105,26 @@ methods: {
   }
 },
 },
+
+
   async registerUser() {
     const cusEmail = this.$store.state.email;
-
+    customerName = this.firstName + this.lastName;
+      try {
     const postResponse = await axios.post(`${store.state.apim}/PostCustomer`, {
       email: cusEmail,
-      name: this.name,
+      customerName: this.customerName,
       phone: this.phone
     }, {
       headers: {
         'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
       }
     });
-
     console.log("Customer added to Cosmos DB");
-
+    this.showRegistrationBox = false;
+  } catch (error) {
+    console.error(error);
+  }
     // Hide the registration box
     this.showRegistrationBox = false;
   },
