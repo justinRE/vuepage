@@ -40,6 +40,7 @@ data () {
     }
 },
 async created () {
+  this.checkRegistration();
   try {
     const response = await axios.get('/.auth/me')
     .then(response => (this.info = response))
