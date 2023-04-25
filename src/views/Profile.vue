@@ -26,102 +26,86 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import axios from 'axios';
 
 export default {
-name: 'Profile',
-data () {
-  return {
-    claims: [],
-    showRegistrationBox: false,
-    phoneNumber: '',
-    name: '',
+  name: 'Profile',
+  data () {
+    return {
+      claims: [],
+      showRegistrationBox: false,
+      phoneNumber: '',
+      name: '',
     }
-},
-async created () {
-  try {
-    const response = await axios.get('/.auth/me')
-    .then(response => (this.info = response))
-    const clientPrincipal = response.data.clientPrincipal
-    const userDetails = clientPrincipal.userDetails
+  },
+  async created () {
+    try {
+      const response = await axios.get('/.auth/me')
+      const clientPrincipal = response.data.clientPrincipal
+      const userDetails = clientPrincipal.userDetails
 
-    var email = userDetails
-    console.log("setting email: " + email)
-    this.setEmail(email)
+      var email = userDetails
+      console.log("setting email: " + email)
+      this.setEmail(email)
 
-    var phone = "502-802-6596"
-    console.log("setting phone [mocked]: " + phone)
-    this.setPhone(phone)
+      var phone = "502-802-6596"
+      console.log("setting phone [mocked]: " + phone)
+      this.setPhone(phone)
 
-    var roles = clientPrincipal.userRoles
-    console.log("setting role: " + roles)
-    this.setRole(roles)
+      var roles = clientPrincipal.userRoles
+      console.log("setting role: " + roles)
+      this.setRole(roles)
 
+      this.checkRegistration()
 
-    this.checkRegistration();
+    } catch (error) {
+      console.error(error)
+    }
+  },
+  computed: {
+    ...mapState(['email'])
+  },
+  methods: {
+    ...mapActions(['setEmail']),
+    ...mapActions(['setPhone']),
+    ...mapActions(['setRole']),
+    checkRegistration() {
+      const cusEmail = this.email;
+      const response = axios.get(`${this.$store.state.apim}/GetCustomerByEmail/${cusEmail}`, {
+          headers: {
+            'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+          }
+        })
+      console.log("Response: " + JSON.stringify(response))
 
-  } catch (error) {
-    console.error(error)
-  }
-},
-methods: {
-  ...mapActions(['setEmail']),
-  ...mapActions(['setPhone']),
-  ...mapActions(['setRole']),
-  GetUserInfo(){},
-  checkRegistration() {
-  const cusEmail = this.$store.state.email;
-  const response = axios.get(`${store.state.apim}/GetCustomerByEmail/${cusEmail}`, {
-      headers: {
-        'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+      if (response.data.type === "CUSTOMER") {
+        console.log("Customer already exists in Cosmos DB");
+      } else {
+        // If customer does not exist, show the registration box
+        console.log("Customer not found in Cosmos DB. Show registration box.");
+        this.showRegistrationBox = true;
       }
-    })
+    },
+    async registerUser() {
+      const cusEmail = this.email;
 
-  if (response.data.type === "CUSTOMER") {
-    console.log("Customer already exists in Cosmos DB");
+      const postResponse = await axios.post(`${this.$store.state.apim}/PostCustomer`, {
+        email: cusEmail,
+        name: this.name,
+        phone: this.phone
+      }, {
+        headers: {
+          'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+        }
+      });
 
-    // Check if customer document includes name and phone
-    const customer = response.data.customer;
-    if (!customer.name || !customer.phone) {
-      console.log("Customer document does not include name and phone");
-      this.showRegistrationBox = true;
-    }
-  } else {
-    // If customer does not exist, add them to Cosmos DB
-    const postResponse = axios.post(`${store.state.apim}/PostCustomer`, {
-      email: cusEmail
-    }, {
-      headers: {
-        'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
-      }
-    });
-    console.log("Customer added to Cosmos DB");
+      console.log("Customer added to Cosmos DB");
 
-    // Show registration box if customer is newly created
-    this.showRegistrationBox = true;
+      // Hide the registration box
+      this.showRegistrationBox = false;
+    },
   }
-},
-},
-async registerUser() {
-  const cusEmail = this.$store.state.email;
-
-  const postResponse = await axios.post(`${store.state.apim}/PostCustomer`, {
-    email: cusEmail,
-    name: this.name,
-    phone: this.phone
-  }, {
-    headers: {
-      'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
-    }
-  });
-
-  console.log("Customer added to Cosmos DB");
-
-  // Hide the registration box
-  this.showRegistrationBox = false;
-},
-
 }
 </script>
 
