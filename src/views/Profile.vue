@@ -58,11 +58,13 @@ async created () {
     this.setRole(roles)
 
 
-    this.checkRegistration();
 
   } catch (error) {
     console.error(error)
   }
+},
+async mounted(){
+  await this.checkRegistration();
 },
 methods: {
   ...mapActions(['setEmail']),
