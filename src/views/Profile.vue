@@ -69,7 +69,7 @@ async created () {
     }
 
   } catch (error) {
-    console.error(error)
+      console.error(error)
   }
 },
 async mounted(){
@@ -102,10 +102,9 @@ methods: {
           }
 
       } catch (err) {
-        console.error("Error response:");
-        console.error("data:" + err.response.data);
-        console.error("status:" + err.response.status);
-        console.error("header:" + err.response.headers); 
+        console.error(err.response.data);
+        console.error("status error:" + err.response.status);
+        console.error(err.response.headers); 
         if (err.response.status = 404) {
         // If customer does not exist, add them to Cosmos DB
         const postResponse = await axios.post(`${store.state.apim}/PostCustomer`, {
@@ -126,12 +125,16 @@ methods: {
     console.log("registerUser")
     const cusEmail = this.$store.state.email;
     const customerName = this.firstName + ' ' + this.lastName;
+    const customerPhone = this.phone;
+    console.log("Phone:" + customerPhone)
+    console.log("Name:" + customerName)
+    console.log("Email:" + cusEmail)
 
       try {
     const postResponse = await axios.post(`${store.state.apim}/PostCustomer`, {
-      CustomerName: cusEmail,
+      CustomerEmail: cusEmail,
       CustomerName: customerName,
-      CustomerPhone: this.phone
+      CustomerPhone: customerPhone
     }, {
       headers: {
         'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
