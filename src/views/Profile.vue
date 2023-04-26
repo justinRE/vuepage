@@ -19,7 +19,7 @@
         <label for="phone">Phone:</label>
         <input type="text" id="phone" v-model="phone">
         <br>
-        <button type="submit" @click="registerUser">Complete Registration</button>
+        <button type="button" @click="registerUser">Complete Registration</button>
       </form>
     </div>
   </div>
@@ -57,7 +57,7 @@ async created () {
       const response = await axios.get('/.auth/me')
       .then(response => (this.info = response))
       const clientPrincipal = response.data.clientPrincipal
-      
+
       const email = clientPrincipal.userDetails
       console.log("setting email: " + email)
       this.setEmail(email)
@@ -140,7 +140,7 @@ methods: {
       }
     });
     console.log("Customer added to Cosmos DB");
-    this.showRegistrationBox = false;
+    // this.showRegistrationBox = false;
   } catch (error) {
     console.error(error);
   }
