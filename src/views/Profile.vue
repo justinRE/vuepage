@@ -73,6 +73,7 @@ methods: {
   GetUserInfo(){},
 
   async checkRegistration() {
+  console.log("Checking reg")
   const cusEmail = this.$store.state.email;
   const getresponse = await axios.get(`${store.state.apim}/GetCustomerByEmail/${cusEmail}`, {
     headers: {
