@@ -44,6 +44,7 @@ data () {
 },
 async created () {
   try {
+    console.log("Created executed")
     const response = await axios.get('/.auth/me')
     .then(response => (this.info = response))
     const clientPrincipal = response.data.clientPrincipal
@@ -58,12 +59,12 @@ async created () {
     this.setRole(roles)
 
 
-
   } catch (error) {
     console.error(error)
   }
 },
 async mounted(){
+  console.log("Mounted executed")
   await this.checkRegistration();
 },
 methods: {
