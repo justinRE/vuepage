@@ -57,9 +57,8 @@ async created () {
       const response = await axios.get('/.auth/me')
       .then(response => (this.info = response))
       const clientPrincipal = response.data.clientPrincipal
-      const userDetails = clientPrincipal.userDetails
-
-      var email = userDetails
+      
+      const email = clientPrincipal.userDetails
       console.log("setting email: " + email)
       this.setEmail(email)
 
