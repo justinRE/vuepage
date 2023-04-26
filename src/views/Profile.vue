@@ -88,7 +88,8 @@ methods: {
       console.log("Customer document does not include name and phone");
       this.showRegistrationBox = true;
     }
-  } else {
+  } else if (response.status === 404) {
+    console.log("else checkreg")
     // If customer does not exist, add them to Cosmos DB
     const postResponse = await axios.post(`${store.state.apim}/PostCustomer`, {
       email: cusEmail
@@ -101,6 +102,9 @@ methods: {
 
     // Show registration box if customer is newly created
     this.showRegistrationBox = true;
+  }
+  else{
+    console.log("Error getting Customer from Cosmos DB");
   }
 },
 
