@@ -76,11 +76,20 @@ methods: {
   async checkRegistration() {
   console.log("Checking reg")
   const cusEmail = this.$store.state.email;
-  const getresponse = await axios.get(`${store.state.apim}/GetCustomerByEmail/${cusEmail}`, {
-    headers: {
-      'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
-    }
-  });
+  let getresponse;
+  try{
+    getresponse = await axios.get(`${store.state.apim}/GetCustomerByEmail/${cusEmail}`, {
+      headers: {
+        'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+      }
+    });
+  } catch (err) {
+    console.error("Error response:");
+    console.error(err.response.data);    // ***
+    console.error(err.response.status);  // ***
+    console.error(err.response.headers); // ***
+  }
+
   console.log("Response obj: " + JSON.jsonify(getresponse));
   console.log("Response Status:"  + getresponse.status);
   if (getresponse.status === 200) {
