@@ -45,19 +45,35 @@ data () {
 async created () {
   try {
     console.log("Created executed")
-    const response = await axios.get('/.auth/me')
-    .then(response => (this.info = response))
-    const clientPrincipal = response.data.clientPrincipal
-    const userDetails = clientPrincipal.userDetails
+    const localCustomer = '[{"id":"6d819433-e471-4df6-9b82-e99bd26af89e","Type":"CUSTOMER","customerName":"Wesley Reisz","customerEmail":"wes@wesleyreisz.com","customerPhone":"502-802-2361","_rid":"qbUlAIdv1-cBAAAAAAAAAA==","_self":"dbs/qbUlAA==/colls/qbUlAIdv1-c=/docs/qbUlAIdv1-cBAAAAAAAAAA==/","_etag":"\"32048390-0000-0700-0000-643d94830000\"","_attachments":"attachments/","_ts":"1681757315"}]';
+    if (window.location.origin = "http://localhost:8080/"){
+      const debug = true;
+    }
+    else{
+      const debug = false;
+    }
 
-    var email = userDetails
-    console.log("setting email: " + email)
-    this.setEmail(email)
+    if (debug) {
+      console.log("debug:" + debug); 
+      console.log("Checking reg")
+      if (debug){
+        this.setEmail(localCustomer.customerEmail); 
+        this.setRole("anonymous")
+      }
+    }else{
+      const response = await axios.get('/.auth/me')
+      .then(response => (this.info = response))
+      const clientPrincipal = response.data.clientPrincipal
+      const userDetails = clientPrincipal.userDetails
 
-    var roles = clientPrincipal.userRoles
-    console.log("setting role: " + roles)
-    this.setRole(roles)
+      var email = userDetails
+      console.log("setting email: " + email)
+      this.setEmail(email)
 
+      var roles = clientPrincipal.userRoles
+      console.log("setting role: " + roles)
+      this.setRole(roles)
+    }
 
   } catch (error) {
     console.error(error)
@@ -74,11 +90,6 @@ methods: {
   GetUserInfo(){},
 
   async checkRegistration() {
-      let debug = Vue.http.headers.common['debug'];
-      console.log("debug:" + debug); 
-
-      console.log("Checking reg")
-      
       const cusEmail = this.$store.state.email;
       let getresponse;
       try{
@@ -87,26 +98,20 @@ methods: {
             'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
           }
         });
-      } catch (err) {
-        console.error("Error response:");
-        console.error(err.response.data);    // ***
-        console.error(err.response.status);  // ***
-        console.error(err.response.headers); // ***
-      }
-
-      console.log("Response obj: " + JSON.jsonify(getresponse));
-      console.log("Response Status:"  + getresponse.status);
-      if (getresponse.status === 200) {
         console.log("Customer already exists in Cosmos DB");
 
-        // Check if customer document includes name and phone
-        const customer = getresponse.data.customer;
-        if (customer && (!customer.CustomerName || !customer.CustomerPhone)) {
-          console.log("Customer document does not include name and phone");
-          this.showRegistrationBox = true;
-        }
-      } else if (getresponse.status === 404) {
-        console.log("else checkreg")
+          let customer = debug ? localCustomer : getresponse.data.customer;
+          if (customer && (!customer.CustomerName || !customer.CustomerPhone)) {
+            console.log("Customer document does not include name and phone");
+            this.showRegistrationBox = true;
+          }
+
+      } catch (err) {
+        console.error("Error response:");
+        console.error("data:" + err.response.data);
+        console.error("status:" + err.response.status);
+        console.error("header:" + err.response.headers); 
+        if (err.response.status = 404) {
         // If customer does not exist, add them to Cosmos DB
         const postResponse = await axios.post(`${store.state.apim}/PostCustomer`, {
           email: cusEmail
@@ -116,17 +121,11 @@ methods: {
           }
         });
         console.log("Customer added to Cosmos DB");
-
         // Show registration box if customer is newly created
         this.showRegistrationBox = true;
       }
-      else{
-        console.log("Error getting Customer from Cosmos DB");
       }
     },
-
-
-
 
   async registerUser() {
     const cusEmail = this.$store.state.email;
@@ -149,6 +148,7 @@ methods: {
 }
 }
 }
+
 
 </script>
 
