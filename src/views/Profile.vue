@@ -19,7 +19,7 @@
         <label for="phone">Phone:</label>
         <input type="text" id="phone" v-model="phone">
         <br>
-        <button type="button" @click="registerUser">Complete Registration</button>
+        <button type="submit" @click="registerUser">Complete Registration</button>
       </form>
     </div>
   </div>
