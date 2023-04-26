@@ -65,6 +65,8 @@ async created () {
       var roles = clientPrincipal.userRoles
       console.log("setting role: " + roles)
       this.setRole(roles)
+
+      await this.checkRegistration();
     }
 
   } catch (error) {
@@ -73,7 +75,7 @@ async created () {
 },
 async mounted(){
   console.log("Mounted executed")
-  await this.checkRegistration();
+
 
 
 },
@@ -131,9 +133,9 @@ methods: {
 
       try {
     const postResponse = await axios.post(`${store.state.apim}/PostCustomer`, {
-      CustomerEmail: cusEmail,
-      CustomerName: customerName,
-      CustomerPhone: customerPhone
+      email: cusEmail,
+      name: customerName,
+      phone: customerPhone
     }, {
       headers: {
         'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
