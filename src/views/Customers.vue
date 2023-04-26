@@ -81,33 +81,18 @@ export default {
       }
 },
 
-punchCustomer(index) {
+async punchCustomer(index) {
   const customerData = Object.values(this.customerData)[index];
-  if (customerData) {
-    if (customerData.hasOwnProperty('customerPunches')) {
-      // If customerData has 'customerPunches' property, increase the number of punches by 1
-      customerData.customerPunches++;
-    } else {
-      // If customerData does not have 'customerPunches' property, add it with value 1
-      this.$set(customerData, 'customerPunches', 1);
+  const getresponse = await axios.get(`${store.state.apim}/PunchCustomer/${customerData.customerEmail}`, {
+    headers: {
+      'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
     }
-    const customerId = customerData.id; 
-    const customerPunches = customerData.customerPunches; 
+  });
+  this.$toast.success(`Successfully punched card for customer ${customerData.customerEmail}`, {
+        position: 'top-right',
+        timeout: 3000
+      });
 
-    axios.post(`${store.state.apim}/UpdateCustomer/${customerId}`, {
-      punches: customerPunches
-    }, {
-      headers: {
-        'Ocp-Apim-Subscription-Key':process.env.VUE_APP_KEY
-      }
-    }).then(response => {
-      console.log('Customer punches updated successfully', response.data);
-    }).catch(error => {
-      console.error('Failed to update customer punches', error);
-    });
-  } else {
-    console.error(`Customer data at index ${index} is undefined`);
-  }
 }
 
 

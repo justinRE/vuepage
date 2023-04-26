@@ -81,8 +81,8 @@ methods: {
       'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
     }
   });
-
-  console.log(getresponse.status);
+  console.log("Response obj: " + JSON.jsonify(getresponse));
+  console.log("Response Status:"  + getresponse.status);
   if (getresponse.status === 200) {
     console.log("Customer already exists in Cosmos DB");
 
