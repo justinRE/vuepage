@@ -45,22 +45,15 @@ data () {
 async created () {
   try {
     console.log("Created executed")
-    const localCustomer = '[{"id":"6d819433-e471-4df6-9b82-e99bd26af89e","Type":"CUSTOMER","customerName":"Wesley Reisz","customerEmail":"wes@wesleyreisz.com","customerPhone":"502-802-2361","_rid":"qbUlAIdv1-cBAAAAAAAAAA==","_self":"dbs/qbUlAA==/colls/qbUlAIdv1-c=/docs/qbUlAIdv1-cBAAAAAAAAAA==/","_etag":"\"32048390-0000-0700-0000-643d94830000\"","_attachments":"attachments/","_ts":"1681757315"}]';
     if (window.location.origin == "http://localhost:8080/"){
       const debug = true;
+      const localCustomer = '[{"id":"6d819433-e471-4df6-9b82-e99bd26af89e","Type":"CUSTOMER","customerName":"Wesley Reisz","customerEmail":"Joem@wesleyreisz.com","customerPhone":"502-802-2361","_rid":"qbUlAIdv1-cBAAAAAAAAAA==","_self":"dbs/qbUlAA==/colls/qbUlAIdv1-c=/docs/qbUlAIdv1-cBAAAAAAAAAA==/","_etag":"\"32048390-0000-0700-0000-643d94830000\"","_attachments":"attachments/","_ts":"1681757315"}]';
+      console.log("debug:" + debug); 
+      this.setEmail(localCustomer.customerEmail); 
+      this.setRole("anonymous")
     }
     else{
       const debug = false;
-    }
-
-    if (debug) {
-      console.log("debug:" + debug); 
-      console.log("Checking reg")
-      if (debug){
-        this.setEmail(localCustomer.customerEmail); 
-        this.setRole("anonymous")
-      }
-    }else{
       const response = await axios.get('/.auth/me')
       .then(response => (this.info = response))
       const clientPrincipal = response.data.clientPrincipal
@@ -82,6 +75,8 @@ async created () {
 async mounted(){
   console.log("Mounted executed")
   await this.checkRegistration();
+
+
 },
 methods: {
   ...mapActions(['setEmail']),
@@ -131,11 +126,12 @@ methods: {
     console.log("registerUser")
     const cusEmail = this.$store.state.email;
     const customerName = this.firstName + ' ' + this.lastName;
+
       try {
     const postResponse = await axios.post(`${store.state.apim}/PostCustomer`, {
-      email: cusEmail,
-      customerName: customerName,
-      phone: this.phone
+      CustomerName: cusEmail,
+      CustomerName: customerName,
+      CustomerPhone: this.phone
     }, {
       headers: {
         'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
