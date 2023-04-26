@@ -106,13 +106,14 @@ methods: {
 
 
 
+
   async registerUser() {
     const cusEmail = this.$store.state.email;
     const customerName = this.firstName + ' ' + this.lastName;
       try {
     const postResponse = await axios.post(`${store.state.apim}/PostCustomer`, {
       email: cusEmail,
-      customerName: this.customerName,
+      customerName: customerName,
       phone: this.phone
     }, {
       headers: {
