@@ -74,52 +74,56 @@ methods: {
   GetUserInfo(){},
 
   async checkRegistration() {
-  console.log("Checking reg")
-  const cusEmail = this.$store.state.email;
-  let getresponse;
-  try{
-    getresponse = await axios.get(`${store.state.apim}/GetCustomerByEmail/${cusEmail}`, {
-      headers: {
-        'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+      let debug = Vue.http.headers.common['debug'];
+      console.log("debug:" + debug); 
+
+      console.log("Checking reg")
+      
+      const cusEmail = this.$store.state.email;
+      let getresponse;
+      try{
+        getresponse = await axios.get(`${store.state.apim}/GetCustomerByEmail/${cusEmail}`, {
+          headers: {
+            'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+          }
+        });
+      } catch (err) {
+        console.error("Error response:");
+        console.error(err.response.data);    // ***
+        console.error(err.response.status);  // ***
+        console.error(err.response.headers); // ***
       }
-    });
-  } catch (err) {
-    console.error("Error response:");
-    console.error(err.response.data);    // ***
-    console.error(err.response.status);  // ***
-    console.error(err.response.headers); // ***
-  }
 
-  console.log("Response obj: " + JSON.jsonify(getresponse));
-  console.log("Response Status:"  + getresponse.status);
-  if (getresponse.status === 200) {
-    console.log("Customer already exists in Cosmos DB");
+      console.log("Response obj: " + JSON.jsonify(getresponse));
+      console.log("Response Status:"  + getresponse.status);
+      if (getresponse.status === 200) {
+        console.log("Customer already exists in Cosmos DB");
 
-    // Check if customer document includes name and phone
-    const customer = getresponse.data.customer;
-    if (customer && (!customer.CustomerName || !customer.CustomerPhone)) {
-      console.log("Customer document does not include name and phone");
-      this.showRegistrationBox = true;
-    }
-  } else if (getresponse.status === 404) {
-    console.log("else checkreg")
-    // If customer does not exist, add them to Cosmos DB
-    const postResponse = await axios.post(`${store.state.apim}/PostCustomer`, {
-      email: cusEmail
-    }, {
-      headers: {
-        'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+        // Check if customer document includes name and phone
+        const customer = getresponse.data.customer;
+        if (customer && (!customer.CustomerName || !customer.CustomerPhone)) {
+          console.log("Customer document does not include name and phone");
+          this.showRegistrationBox = true;
+        }
+      } else if (getresponse.status === 404) {
+        console.log("else checkreg")
+        // If customer does not exist, add them to Cosmos DB
+        const postResponse = await axios.post(`${store.state.apim}/PostCustomer`, {
+          email: cusEmail
+        }, {
+          headers: {
+            'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+          }
+        });
+        console.log("Customer added to Cosmos DB");
+
+        // Show registration box if customer is newly created
+        this.showRegistrationBox = true;
       }
-    });
-    console.log("Customer added to Cosmos DB");
-
-    // Show registration box if customer is newly created
-    this.showRegistrationBox = true;
-  }
-  else{
-    console.log("Error getting Customer from Cosmos DB");
-  }
-},
+      else{
+        console.log("Error getting Customer from Cosmos DB");
+      }
+    },
 
 
 
