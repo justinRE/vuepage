@@ -103,7 +103,6 @@ methods: {
           }
 
       } catch (err) {
-        console.error(err.response.data);
         console.error("status error:" + err.response.status);
         console.error(err.response.headers); 
         if (err.response.status = 404) {
