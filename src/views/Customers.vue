@@ -88,10 +88,6 @@ async punchCustomer(index) {
       'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
     }
   });
-  this.$toast.success(`Successfully punched card for customer ${customerData.customerEmail}`, {
-        position: 'top-right',
-        timeout: 3000
-      });
 
 }
 
