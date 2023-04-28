@@ -18,7 +18,7 @@
             <td>{{ customerData.customerPhone }}</td>
             <td>
               <button class="btn btn-danger" @click="deleteCustomer(index)">Delete</button>
-              <button class="btn btn-success" @click="punchCustomer(index)">Punch</button>
+              <button class="btn btn-success" @click="punchCustomerCard(index)">Punch</button>
             </td>
           </tr>
         </tbody>
@@ -81,9 +81,9 @@ export default {
       }
 },
 
-async punchCustomer(index) {
+async punchCustomerCard(index) {
   const customerData = Object.values(this.customerData)[index];
-  const getresponse = await axios.get(`${store.state.apim}/PunchCustomer/${customerData.customerEmail}`, {
+  const getresponse = await axios.get(`${store.state.apim}/PunchCustomerCard/${customerData.customerEmail}`, {
     headers: {
       'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
     }
