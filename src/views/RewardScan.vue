@@ -1,8 +1,6 @@
 <template>
     <container>
-        <p> Scan Punches</p>
-    <p>{{ error }}</p>
-    <p> {{ decodedString }}</p>
+        <h1> Scan Punches</h1>
 <qrcode-stream @init="onInit" @decode="onDecode"> </qrcode-stream>
 <button @click="torch=!torch">Toggle device flashlight</button>
     </container>
@@ -58,6 +56,7 @@ export default {
       })
                 .then(response => {
                 this.error = 'Scanned successfully';
+                this.$toast.open(`${decodedString} Card punched successfully`)
                 })
                 .catch(error => {
                 this.error = 'Failed to add punch';
@@ -70,5 +69,8 @@ export default {
 </script>
 
 <style>
-
+.main-container {
+  width: 80%;
+  margin: 0 auto;
+}
 </style>
