@@ -81,23 +81,33 @@ export default {
     try {
       var cusEmail = encodeURIComponent(this.email)
       console.log(cusEmail)
+      //This counts the number of punches%10 to populate the punch card
       const response = await axios.get(`${store.state.apim}/GetCustomerPunches/${cusEmail}`, {
         headers: {
           'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
         }
       })  
       this.punches = response.data.punchNumber;
-      this.userRewards = response.data.rewardTotal;
       console.log("Response: " + JSON.stringify(response))
       this.userEmail = this.email;
+
+      //This checks the customers information for sets of 10 punches that aren't claimed and gives rewards
+      await axios.get(`${store.state.apim}/CheckReward/${cusEmail}`,{
+        headers: {
+          'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+        }
+      })
+
+      //This counts the numbr of rewards currently available
+      const reply = await axios.get(`${store.state.apim}/RewardCount/${cusEmail}`,{
+        headers: {
+          'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+        }
+      })
+
+      this.userRewards = reply.data.unclaimedRewards.Count();
     } catch (error) {
       console.error(error)
-    }
-  },
-  computed: {
-    initialFreeDrinks() {
-      const freeDrinks = Math.floor(this.cardPunches / 10);
-      return freeDrinks < 1 ? 0 : freeDrinks;
     }
   }
 };

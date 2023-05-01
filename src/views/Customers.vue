@@ -17,8 +17,9 @@
             <td>{{ customerData.customerEmail }}</td>
             <td>{{ customerData.customerPhone }}</td>
             <td>
-              <button class="btn btn-danger" @click="confirmDeleteCustomer(customerData.customerEmail)">Delete</button>
               <button class="btn btn-success" @click="punchCustomerCard(customerData.customerEmail)">Punch</button>
+              <button class="btn btn-warning" @click="rewardCustomer(customerData.customerEmail)">Add Reward</button>
+              <button class="btn btn-danger" @click="deleteCustomer(customerData.customerEmail)">Delete</button>
             </td>
           </tr>
         </tbody>
@@ -81,14 +82,22 @@ export default {
       });
     },
 
-    confirmDeleteCustomer(email) {
-      this.$toast.warning(`Are you sure you want to delete ${email}?`, 'Confirm', {
-        onClick: this.deleteCustomer(email),
-        duration: 10,
-        type: 'warning'
-      })
+
+    rewardCustomer(email) {
+      axios.get(`${store.state.apim}/RewardCustomer/${email}`, {
+        headers: {
+          'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+        }
+      }).then(() => {
+        this.$toast.open('Customer was given a free reward');
+      }).catch(error => {
+        console.error(error);
+      });
     },
+
   },
+
+
   created() {
     this.Customers();
   }
