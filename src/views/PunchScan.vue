@@ -10,8 +10,8 @@
 
 <script>
 import {QrcodeStream} from 'vue-qrcode-reader'
-import { mapState } from 'vuex'
 import store from '../store'
+import 'vue-toast-notification/dist/theme-sugar.css';
 
 
 export default {

@@ -44,13 +44,12 @@ data () {
 },
 async created () {
   try {
-    console.log("Created executed")
-    if (window.location.origin == "http://localhost:8080/"){
+    if (process.env.DEBUG == "TRUE"){
       const debug = true;
-      const localCustomer = '[{"id":"6d819433-e471-4df6-9b82-e99bd26af89e","Type":"CUSTOMER","customerName":"Wesley Reisz","customerEmail":"Joem@wesleyreisz.com","customerPhone":"502-802-2361","_rid":"qbUlAIdv1-cBAAAAAAAAAA==","_self":"dbs/qbUlAA==/colls/qbUlAIdv1-c=/docs/qbUlAIdv1-cBAAAAAAAAAA==/","_etag":"\"32048390-0000-0700-0000-643d94830000\"","_attachments":"attachments/","_ts":"1681757315"}]';
+      const localCustomer = '[{"id":"6d819433-e471-4df6-9b82-e99bd26af89e","Type":"CUSTOMER","customerName":"Debug Reisz","customerEmail":"Debug@wesleyreisz.com","customerPhone":"502-802-2361","_rid":"qbUlAIdv1-cBAAAAAAAAAA==","_self":"dbs/qbUlAA==/colls/qbUlAIdv1-c=/docs/qbUlAIdv1-cBAAAAAAAAAA==/","_etag":"\"32048390-0000-0700-0000-643d94830000\"","_attachments":"attachments/","_ts":"1681757315"}]';
       console.log("debug:" + debug); 
       this.setEmail(localCustomer.customerEmail); 
-      this.setRole("anonymous")
+      this.setRole("admin")
     }
     else{
       const debug = false;
@@ -72,12 +71,6 @@ async created () {
   } catch (error) {
       console.error(error)
   }
-},
-async mounted(){
-  console.log("Mounted executed")
-
-
-
 },
 methods: {
   ...mapActions(['setEmail']),

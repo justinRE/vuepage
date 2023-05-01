@@ -4,9 +4,10 @@ import router from './router'
 import store from './store'
 import ToastPlugin from 'vue-toast-notification';
 
+Vue.use(ToastPlugin)
+
 new Vue({
   router,
   store,
-  ToastPlugin,
   render: function (h) { return h(App) }
 }).$mount('#app')

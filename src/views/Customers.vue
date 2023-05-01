@@ -30,9 +30,8 @@
 <script>
 import axios from 'axios';
 import store from '../store';
-import VueToast from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
-import MessageBox from 'vue-messagebox';
+
 
 export default {
   name: 'Customers', 
@@ -57,17 +56,17 @@ export default {
     },
 
     deleteCustomer(email) {
-      axios.delete(`${store.state.apim}/DeleteCustomerByEmail/${email}`, {
+      axios.delete(`${store.state.apim}/DeleteCustomer/${email}`, {
         headers: {
           'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
         }
       }).then(() => {
         const index = this.customerData.findIndex(c => c.customerEmail === email);
         this.customerData.splice(index, 1);
-        Vue.$toast.open(`Customer ${email} has been deleted successfully`);
+        this.$toast.open(`Customer ${email} has been deleted successfully`);
       }).catch(error => {
         console.error(error);
-      });
+      })
     },
 
     punchCustomerCard(email) {
@@ -76,27 +75,22 @@ export default {
           'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
         }
       }).then(() => {
-        Vue.$toast.open('Card punched successfully');
+        this.$toast.open('Card punched successfully');
       }).catch(error => {
         console.error(error);
       });
     },
 
     confirmDeleteCustomer(email) {
-      this.$confirm(`Are you sure you want to delete ${email}?`, {
-        confirmButtonText: 'Delete',
-        cancelButtonText: 'Cancel',
+      this.$toast.warning(`Are you sure you want to delete ${email}?`, 'Confirm', {
+        onClick: this.deleteCustomer(email),
+        duration: 10,
         type: 'warning'
-      }).then(() => {
-        this.deleteCustomer(email);
-      }).catch(() => {
-        Vue.$toast.info('Action canceled by the user');
-      });
+      })
     },
   },
   created() {
     this.Customers();
-    Vue.use(VueToast);
   }
 }
 </script>
