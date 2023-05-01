@@ -1,14 +1,15 @@
 <template>
-    <container>
+    <div>
         <p> Scan Punches</p>
     <p>{{ error }}</p>
     <p> {{ decodedString }}</p>
 <qrcode-stream @init="onInit" @decode="onDecode"> </qrcode-stream>
 <button @click="torch=!torch">Toggle device flashlight</button>
-    </container>
+    </div>
 </template>
 
 <script>
+import axios from 'axios';
 import {QrcodeStream} from 'vue-qrcode-reader'
 import store from '../store'
 import 'vue-toast-notification/dist/theme-sugar.css';
@@ -20,7 +21,7 @@ export default {
             error: '',
             decodedString: '',
             torch: false,
-            cusEmail: store.state.Email
+            cusEmail: null
         }
     },
     components:{
@@ -50,15 +51,22 @@ export default {
             }
         },
         onDecode(decodedString) {
-            this.decodedString = decodedString;
-            axios.post(`${store.state.apim}/PunchCustomerCard/${cusEmail}`, { punchData: decodedString })
+            this.decodedString = decodedString
+            console.log(decodedString)
+            axios.get(`${store.state.apim}/PunchCustomerCard/${decodedString}`, {
+        headers: {
+          'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+        }
+      }) 
                 .then(response => {
-                this.error = 'Scanned successfully';
+                    this.error = 'Scanned successfully';
+                    console.log(response.data);
                 })
                 .catch(error => {
-                this.error = 'Failed to add punch';
-                });
-        },
+                    console.log(error);
+                    this.error = 'Failed to add punch';
+    });
+}
 
 
     }

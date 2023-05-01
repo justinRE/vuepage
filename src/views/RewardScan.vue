@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import {QrcodeStream} from 'vue-qrcode-reader'
 import 'vue-toast-notification/dist/theme-sugar.css';
 import store from '../store'
@@ -19,7 +20,7 @@ export default {
             error: '',
             decodedString: '',
             torch: false,
-            cusEmail: store.state.Email
+            cusEmail: null
         }
     },
     components:{
@@ -49,8 +50,12 @@ export default {
             }
         },
         onDecode(decodedString) {
-            this.decodedString = decodedString;
-            axios.post(`${store.state.apim}/ClaimReward/${cusEmail}`, { punchData: decodedString })
+            this.decodedString = cusEmail;
+            axios.get(`${store.state.apim}/ClaimReward/${cusEmail}`, {
+        headers: {
+          'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+        }
+      })
                 .then(response => {
                 this.error = 'Scanned successfully';
                 })
