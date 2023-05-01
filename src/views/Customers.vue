@@ -28,13 +28,11 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import axios from 'axios';
-import store from '../store'
+import store from '../store';
 import VueToast from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
-
-Vue.use(VueToast);
+import MessageBox from 'vue-messagebox';
 
 export default {
   name: 'Customers', 
@@ -58,65 +56,50 @@ export default {
       });
     },
 
-    deleteCustomer(index) {
-      // Check if customerData array is not empty
-      if (this.customerData.length > 0) {
-        const customerData = Object.values(this.customerData)[index];
-        // Check if customerData at index is defined
-        if (customerData) {
-          const customerId = customerData.id; // Use customer ID directly from customerData array
-
-          this.$confirm(`Are you sure you want to delete ${customerData.customerEmail}?`, 'Delete', {
-            confirmButtonText: 'Yes',
-            cancelButtonText: 'No',
-            type: 'warning'
-          }).then(() => {
-            axios.delete(`${store.state.apim}/DeleteCustomer/${customerId}`, {
-              headers: {
-                'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
-              }
-            }).then(() => {
-              // remove the customer data from the table
-              this.customerData.splice(index, 1);
-              this.$toast.open({
-                message: 'Customer successfully deleted',
-                type: 'success'
-              });
-            }).catch(error => {
-              console.error(error);
-            });
-          }).catch(() => {
-            // Do nothing if the user cancels the delete operation
-          });
-        } else {
-          console.error(`Customer data at index ${index} is undefined`);
+    deleteCustomer(email) {
+      axios.delete(`${store.state.apim}/DeleteCustomerByEmail/${email}`, {
+        headers: {
+          'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
         }
-      } else {
-        console.error('Customer data array is empty');
-      }
-},
+      }).then(() => {
+        const index = this.customerData.findIndex(c => c.customerEmail === email);
+        this.customerData.splice(index, 1);
+        Vue.$toast.open(`Customer ${email} has been deleted successfully`);
+      }).catch(error => {
+        console.error(error);
+      });
+    },
 
-async punchCustomerCard(index) {
-  const customerData = Object.values(this.customerData)[index];
-  const getresponse = await axios.get(`${store.state.apim}/PunchCustomerCard/${customerData.customerEmail}`, {
-    headers: {
-      'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
-    }
-  });
-  this.$toast.open({
-    message: 'Customer card punched successfully',
-    type: 'success'
-  });
-}
+    punchCustomerCard(email) {
+      axios.get(`${store.state.apim}/PunchCustomerCard/${email}`, {
+        headers: {
+          'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
+        }
+      }).then(() => {
+        Vue.$toast.open('Card punched successfully');
+      }).catch(error => {
+        console.error(error);
+      });
+    },
 
-
+    confirmDeleteCustomer(email) {
+      this.$confirm(`Are you sure you want to delete ${email}?`, {
+        confirmButtonText: 'Delete',
+        cancelButtonText: 'Cancel',
+        type: 'warning'
+      }).then(() => {
+        this.deleteCustomer(email);
+      }).catch(() => {
+        Vue.$toast.info('Action canceled by the user');
+      });
+    },
   },
   created() {
     this.Customers();
+    Vue.use(VueToast);
   }
 }
 </script>
-
 
 <style lang="css">
 .table-wrapper {
