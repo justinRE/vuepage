@@ -50,7 +50,7 @@ export default {
         },
         onDecode(decodedString) {
             this.decodedString = decodedString;
-            axios.post(`${store.state.apim}/RewardCustomer/${cusEmail}`, { punchData: decodedString })
+            axios.post(`${store.state.apim}/ClaimReward/${cusEmail}`, { punchData: decodedString })
                 .then(response => {
                 this.error = 'Scanned successfully';
                 })
