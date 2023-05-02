@@ -38,7 +38,7 @@
           <!-- Content -->
           <div class="card-body">
             <!-- this doesn't include the drinks that have been claimed-->
-            <h4 class="font-weight-bold mb-3">Number of Free Drinks: {{ userRewards }}</h4>
+            <h4 class="font-weight-bold mb-3">Free Drinks Available: {{ userRewards }}</h4>
             <div class="hint" v-if="!flipped">Click anywhere to flip</div>
           </div>
           </div>

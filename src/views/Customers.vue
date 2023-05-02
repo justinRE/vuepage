@@ -25,6 +25,7 @@
         </tbody>
       </table>
     </div>
+    <confirm-dialogue ref="ConfirmDialogue"></confirm-dialogue>
   </div>
 </template>
 
@@ -32,9 +33,10 @@
 import axios from 'axios';
 import store from '../store';
 import 'vue-toast-notification/dist/theme-sugar.css';
-
+import ConfirmDialogue from '../components/ConfirmDialogue.vue'
 
 export default {
+  components: {ConfirmDialogue},
   name: 'Customers', 
   data() {
     return {
@@ -56,7 +58,13 @@ export default {
       });
     },
 
-    deleteCustomer(email) {
+   async deleteCustomer(email) {
+    const ok = await this.$refs.ConfirmDialogue.show({
+                title: 'Delete Customer',
+                message: `Are you sure you want to delete ${email}'s customer record forever? This cannot be undone.`,
+                okButton: 'Delete Customer forever',
+            })
+            if (ok) {
       axios.delete(`${store.state.apim}/DeleteCustomer/${email}`, {
         headers: {
           'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
@@ -67,10 +75,19 @@ export default {
         this.$toast.open(`Customer ${email} has been deleted successfully`);
       }).catch(error => {
         console.error(error);
-      })
+      })}
+      else {
+                alert('Customer not deleted.')
+          }
     },
 
-    punchCustomerCard(email) {
+    async punchCustomerCard(email) {
+      const ok = await this.$refs.ConfirmDialogue.show({
+                title: 'Punch Card',
+                message: `Are you sure you want to punch ${email}'s card?`,
+                okButton: 'Punch Card',
+            })
+            if (ok) {
       axios.get(`${store.state.apim}/PunchCustomerCard/${email}`, {
         headers: {
           'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
@@ -80,10 +97,20 @@ export default {
       }).catch(error => {
         console.error(error);
       });
+    }
+    else {
+                alert('Customer Card not punched.')
+          }
     },
 
 
-    rewardCustomer(email) {
+    async rewardCustomer(email) {
+      const ok = await this.$refs.ConfirmDialogue.show({
+                title: 'Reward Customer',
+                message: `Are you sure you want to give ${email} a free reward?`,
+                okButton: 'Give Reward',
+            })
+            if (ok) {
       axios.get(`${store.state.apim}/RewardCustomer/${email}`, {
         headers: {
           'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
@@ -93,7 +120,11 @@ export default {
       }).catch(error => {
         console.error(error);
       });
-    },
+    }
+    else {
+                alert('Customer not given reward.')
+          }
+        },
 
   },
 
