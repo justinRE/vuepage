@@ -1,6 +1,6 @@
 <template>
     <container>
-        <h1> Scan Punches</h1>
+        <h1> Redeem Customer Rewards</h1>
 <qrcode-stream @init="onInit" @decode="onDecode"> </qrcode-stream>
 <button @click="torch=!torch">Toggle device flashlight</button>
     </container>
@@ -48,8 +48,8 @@ export default {
             }
         },
         onDecode(decodedString) {
-            this.decodedString = cusEmail;
-            axios.get(`${store.state.apim}/ClaimReward/${cusEmail}`, {
+            this.decodedString = decodedString
+            axios.get(`${store.state.apim}/ClaimReward/${decodedString}`, {
         headers: {
           'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
         }
