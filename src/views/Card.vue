@@ -113,9 +113,6 @@ export default {
         }
       })
       this.userRewards = reply.data;
-      console.log("Response: " + JSON.stringify(reply))
-      console.log(this.userRewards);
-      console.log(reply.data);
     } catch (error) {
       console.error(error)
     }
