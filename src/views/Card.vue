@@ -112,11 +112,10 @@ export default {
           'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
         }
       })
-      this.userRewards = reply.data.unclaimedRewards;
+      this.userRewards = reply.data;
       console.log("Response: " + JSON.stringify(reply))
-      console.log(reply)
       console.log(this.userRewards);
-      console.log(reply.data.unclaimedRewards);
+      console.log(reply.data);
     } catch (error) {
       console.error(error)
     }
