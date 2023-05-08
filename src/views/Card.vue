@@ -113,6 +113,8 @@ export default {
         }
       })
       this.userRewards = reply.data.unclaimedRewards;
+      console.log("Response: " + JSON.stringify(reply))
+      console.log(reply)
       console.log(this.userRewards);
       console.log(reply.data.unclaimedRewards);
     } catch (error) {
