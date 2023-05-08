@@ -100,6 +100,7 @@ export default {
           'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
         }
       })
+
     } catch (error) {
       console.error(error)
     }
@@ -111,8 +112,9 @@ export default {
           'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
         }
       })
-
       this.userRewards = reply.data.unclaimedRewards;
+      console.log(this.userRewards);
+      console.log(reply.data.unclaimedRewards);
     } catch (error) {
       console.error(error)
     }
