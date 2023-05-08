@@ -90,14 +90,21 @@ export default {
       this.punches = response.data.punchNumber;
       console.log("Response: " + JSON.stringify(response))
       this.userEmail = this.email;
-
+    } catch (error) {
+      console.error(error)
+    }
+    try{
       //This checks the customers information for sets of 10 punches that aren't claimed and gives rewards
       await axios.get(`${store.state.apim}/CheckReward/${cusEmail}`,{
         headers: {
           'Ocp-Apim-Subscription-Key': process.env.VUE_APP_KEY
         }
       })
+    } catch (error) {
+      console.error(error)
+    }
 
+    try {
       //This counts the numbr of rewards currently available
       const reply = await axios.get(`${store.state.apim}/RewardCount/${cusEmail}`,{
         headers: {
