@@ -112,7 +112,7 @@ export default {
         }
       })
 
-      this.userRewards = reply.data.unclaimedRewards.Count();
+      this.userRewards = reply.data.unclaimedRewards;
     } catch (error) {
       console.error(error)
     }
